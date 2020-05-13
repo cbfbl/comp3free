@@ -1,9 +1,9 @@
 %{
 
 /* Declarations section */
+#include "types.hpp"
 #include "parser.tab.hpp"
 #include "hw3_output.hpp"
-#include "types.hpp"
 
 %}
 
@@ -14,37 +14,37 @@
 
 
 
-void                            return new BasicType(yytext);
-int                             return INT;
-byte                            return BYTE;
-b                               return B;
-bool                            return BOOL;
-and                             return AND;
-or                              return OR;
-not                             return NOT;
-true                            return TRUE;
-false                           return FALSE;
-return                          return RETURN;
-if                              return IF;
-else                            return ELSE;
-while                           return WHILE;
-break                           return BREAK;
-continue                        return CONTINUE;
-;                               return SC;
-,                               return COMMA;
-\(                              return LPAREN;
-\)                              return RPAREN;
-\{                              return LBRACE;
-\}                              return RBRACE;
-=                               return ASSIGN;
-\<|>|<=|>=                      return RELOP;
-==|!=                           return RELEQ;
-[\*\/]                          return BINOPH;
-[\+\-]                          return BINOPL;
-[a-zA-z][a-zA-z0-9]*            return ID;
-0|[1-9][0-9]*                   return NUM;
-\"([^\n\r\"\\]|\\[rnt"\\])+\"	  return STRING;
-<<EOF>>                         return 0;
+void                            {yylval=new Basictype(yytext); return VOID;};
+int                             {yylval=new Basictype(yytext); return INT;};
+byte                            {yylval=new Basictype(yytext); return BYTE;};
+b                               {yylval=new Basictype(yytext); return B;};
+bool                            {yylval=new Basictype(yytext); return BOOL;};
+and                             {yylval=new Basictype(yytext); return AND;};
+or                              {yylval=new Basictype(yytext); return OR;};
+not                             {yylval=new Basictype(yytext); return NOT;};
+true                            {yylval=new Basictype(yytext); return TRUE;};
+false                           {yylval=new Basictype(yytext); return FALSE;};
+return                          {yylval=new Basictype(yytext); return RETURN;};
+if                              {yylval=new Basictype(yytext); return IF;};
+else                            {yylval=new Basictype(yytext); return ELSE;};
+while                           {yylval=new Basictype(yytext); return WHILE;};
+break                           {yylval=new Basictype(yytext); return BREAK;};
+continue                        {yylval=new Basictype(yytext); return CONTINUE;};
+;                               {yylval=new Basictype(yytext); return SC;};
+,                               {yylval=new Basictype(yytext); return COMMA;};
+\(                              {yylval=new Basictype(yytext); return LPAREN;};
+\)                              {yylval=new Basictype(yytext); return RPAREN;};
+\{                              {yylval=new Basictype(yytext); return LBRACE;};
+\}                              {yylval=new Basictype(yytext); return RBRACE;};
+=                               {yylval=new Basictype(yytext); return ASSIGN;};
+\<|>|<=|>=                      {yylval=new Basictype(yytext); return RELOP;};
+==|!=                           {yylval=new Basictype(yytext); return RELEQ;};
+[\*\/]                          {yylval=new Basictype(yytext); return BINOPH;};
+[\+\-]                          {yylval=new Basictype(yytext); return BINOPL;};
+[a-zA-z][a-zA-z0-9]*            {yylval=new Basictype(yytext); return ID;};
+0|[1-9][0-9]*                   {yylval=new Basictype(yytext); return NUM;};
+\"([^\n\r\"\\]|\\[rnt"\\])+\"	{yylval=new Basictype(yytext); return STRING;};
+<<EOF>>                         {yylval=new Basictype(yytext); return 0;};
 [\r\n\t ]|\/\/[^\r\n]*[\r|\n|\r\n]?	    ;
 .                               output::errorLex(yylineno); exit(0);
 

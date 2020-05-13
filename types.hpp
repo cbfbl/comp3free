@@ -15,4 +15,6 @@ class Int : public Basictype {
   int lexeme_value;
 };
 
+#define YYSTYPE Basictype*
+
 #endif

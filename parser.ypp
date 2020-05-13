@@ -3,13 +3,12 @@
 	#include <stdlib.h>
     #include <string>
     #include <vector>
+
     #include "types.hpp"
 	#include "hw3_output.hpp"
     #include "handler.hpp"
 	extern int yylex();
 	extern int yylineno;
-
-    #define YYSTYPE Basictype*
     Handler handler;
 	int yyerror(const char * message);
 %}
