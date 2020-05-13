@@ -1,6 +1,7 @@
 #ifndef HANDLER_H
 #define HANDLER_H
 
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -8,6 +9,8 @@
 #include "symboltable.hpp"
 #include "types.hpp"
 
+using std::cout;
+using std::endl;
 using std::string;
 using std::vector;
 

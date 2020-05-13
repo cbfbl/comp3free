@@ -4,3 +4,4 @@ lex.yy.c
 makefile
 parser.tab.cpp
 parser.tab.hpp
+/tests
