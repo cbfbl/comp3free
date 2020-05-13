@@ -2,3 +2,5 @@ hw3*
 self-checkhw3
 lex.yy.c
 makefile
+parser.tab.cpp
+parser.tab.hpp
