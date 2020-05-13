@@ -23,6 +23,16 @@ class Basictype {
 
 class Int : public Basictype {
   int lexeme_value;
+
+ public:
+  Int(char* yytext);
+};
+
+class Id : public Basictype {
+  string name;
+
+ public:
+  Id(char* yytext);
 };
 
 #define YYSTYPE Basictype*

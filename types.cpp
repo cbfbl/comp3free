@@ -15,3 +15,8 @@ void Basictype::setLocalOffset(int local_set) { local_offset = local_set; }
 string Basictype::getType() { return type; }
 
 void Basictype::setType(string type_set) { type = type_set; }
+
+Int::Int(char* yytext)
+    : Basictype(yytext), lexeme_value(stoi(string(yytext))) {}
+
+Id::Id(char* yytext) : Basictype(yytext), name(yytext) {}
