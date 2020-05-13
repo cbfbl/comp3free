@@ -18,6 +18,8 @@ class Handler {
   SymbolTable symbol_table;
   OffsetStack offset_stack;
 
+  void handleStatmentTypeId(Basictype* type, Basictype* id);
+
  public:
   void handleRule(int rule_number, vector<Basictype*> params);
 };

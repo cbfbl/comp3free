@@ -45,7 +45,10 @@ FormalDecl : Type ID 													{handler.handleRule(11,vector<Basictype*>());}
 Statements : Statement 													{handler.handleRule(12,vector<Basictype*>());};
 Statements : Statements Statement 										{handler.handleRule(13,vector<Basictype*>());};
 Statement : LBRACE Statements RBRACE 									{handler.handleRule(14,vector<Basictype*>());};
-Statement : Type ID SC 													{handler.handleRule(15,vector<Basictype*>());};
+Statement : Type ID SC 													{
+    vector<Basictype*> vec{$1,$2,$3};
+    handler.handleRule(15,vec);
+};
 Statement : Type ID ASSIGN Exp SC										{handler.handleRule(16,vector<Basictype*>());};
 Statement : ID ASSIGN Exp SC 											{handler.handleRule(17,vector<Basictype*>());};
 Statement : Call SC 													{handler.handleRule(18,vector<Basictype*>());};
