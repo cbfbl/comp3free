@@ -1,0 +1,93 @@
+%{
+	#include <iostream>
+	#include <stdlib.h>
+    #include <string>
+    #include <vector>
+    #include "types.h"
+	#include "hw3_output.hpp"
+    #include "handler.hpp"
+	extern int yylex();
+	extern int yylineno;
+    Handler handler;
+	int yyerror(const char * message);
+%}
+
+%token BOOL
+%token VOID INT BYTE B TRUE FALSE RETURN WHILE IF
+%token BREAK CONTINUE SC COMMA LPAREN RPAREN LBRACE RBRACE
+%token  ID NUM STRING
+%right ASSIGN
+%left OR
+%left AND
+%left RELEQ
+%nonassoc RELOP
+%left BINOPL
+%left BINOPH
+%right NOT
+%nonassoc THEN
+%nonassoc ELSE
+
+
+%%
+
+Program	: Funcs 														{handler.handleRule(1,vector<string>());};
+Funcs : /*epsilon*/ 													{handler.handleRule(2,vector<string>());};
+Funcs : FuncDecl Funcs 													{handler.handleRule(3,vector<string>());};
+FuncDecl : RetType ID LPAREN Formals RPAREN LBRACE Statements RBRACE 	{handler.handleRule(4,vector<string>());};
+RetType : Type															{handler.handleRule(5,vector<string>());};
+RetType : VOID 															{handler.handleRule(6,vector<string>());};
+Formals : /*epsilon*/ 													{handler.handleRule(7,vector<string>());};
+Formals : FormalsList 												    {handler.handleRule(8,vector<string>());};
+FormalsList : FormalDecl 												{handler.handleRule(9,vector<string>());};
+FormalsList : FormalDecl COMMA FormalsList 								{handler.handleRule(10,vector<string>());};
+FormalDecl : Type ID 													{handler.handleRule(11,vector<string>());};
+Statements : Statement 													{handler.handleRule(12,vector<string>());};
+Statements : Statements Statement 										{handler.handleRule(13,vector<string>());};
+Statement : LBRACE Statements RBRACE 									{handler.handleRule(14,vector<string>());};
+Statement : Type ID SC 													{handler.handleRule(15,vector<string>());};
+Statement : Type ID ASSIGN Exp SC										{handler.handleRule(16,vector<string>());};
+Statement : ID ASSIGN Exp SC 											{handler.handleRule(17,vector<string>());};
+Statement : Call SC 													{handler.handleRule(18,vector<string>());};
+Statement : RETURN SC													{handler.handleRule(19,vector<string>());};
+Statement : RETURN Exp SC												{handler.handleRule(20,vector<string>());};
+Statement : IF LPAREN Exp RPAREN Statement %prec THEN					{handler.handleRule(21,vector<string>());};
+Statement : IF LPAREN Exp RPAREN Statement ELSE Statement				{handler.handleRule(22,vector<string>());};
+Statement : WHILE LPAREN Exp RPAREN Statement %prec THEN				{handler.handleRule(23,vector<string>());};
+Statement : WHILE LPAREN Exp RPAREN Statement ELSE Statement			{handler.handleRule(24,vector<string>());};
+Statement : BREAK SC 													{handler.handleRule(25,vector<string>());};
+Statement : CONTINUE SC 												{handler.handleRule(26,vector<string>());};
+Call : ID LPAREN ExpList RPAREN											{handler.handleRule(27,vector<string>());};
+Call : ID LPAREN RPAREN													{handler.handleRule(28,vector<string>());};
+ExpList : Exp															{handler.handleRule(29,vector<string>());};
+ExpList : Exp COMMA ExpList												{handler.handleRule(30,vector<string>());};
+Type : INT																{handler.handleRule(31,vector<string>());};
+Type : BYTE																{handler.handleRule(32,vector<string>());};
+Type : BOOL															    {handler.handleRule(33,vector<string>());};
+Exp : LPAREN Exp RPAREN													{handler.handleRule(34,vector<string>());};
+Exp : Exp BINOPH Exp 													{handler.handleRule(35,vector<string>());};
+Exp : Exp BINOPL Exp													{handler.handleRule(36,vector<string>());};
+Exp : ID																{handler.handleRule(37,vector<string>());};
+Exp : Call																{handler.handleRule(38,vector<string>());};
+Exp : NUM																{handler.handleRule(39,vector<string>());};
+Exp : NUM B																{handler.handleRule(40,vector<string>());};
+Exp : STRING															{handler.handleRule(41,vector<string>());};
+Exp : TRUE																{handler.handleRule(42,vector<string>());};
+Exp : FALSE															    {handler.handleRule(43,vector<string>());};
+Exp : NOT Exp															{handler.handleRule(44,vector<string>());};
+Exp : Exp AND Exp													    {handler.handleRule(45,vector<string>());};
+Exp : Exp OR Exp 														{handler.handleRule(46,vector<string>());};
+Exp : Exp RELOP Exp														{handler.handleRule(47,vector<string>());};
+Exp : Exp RELEQ Exp														{handler.handleRule(48,vector<string>());};
+
+%%
+
+int main()
+{
+	yyparse();
+}
+
+int yyerror(const char * message)
+{
+	output::errorSyn(yylineno);
+	exit(0);
+}
