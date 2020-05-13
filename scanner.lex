@@ -3,6 +3,7 @@
 /* Declarations section */
 #include "parser.tab.hpp"
 #include "hw3_output.hpp"
+#include "types.hpp"
 
 %}
 
@@ -13,7 +14,7 @@
 
 
 
-void                            return VOID;
+void                            return new BasicType(yytext);
 int                             return INT;
 byte                            return BYTE;
 b                               return B;

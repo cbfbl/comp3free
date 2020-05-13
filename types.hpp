@@ -6,6 +6,9 @@ using std::string;
 
 class Basictype {
   string lexeme;
+
+ public:
+  Basictype(char* yytext);
 };
 
 class Int : public Basictype {

@@ -6,7 +6,7 @@
 
 #include "offsetstack.hpp"
 #include "symboltable.hpp"
-#include "types.h"
+#include "types.hpp"
 
 using std::string;
 using std::vector;
