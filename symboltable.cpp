@@ -13,3 +13,5 @@ bool SymbolTable::exists(string id) {
   }
   return false;
 }
+
+int SymbolTable::getTopScopeSize() { return scopes.back().size(); }

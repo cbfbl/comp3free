@@ -12,6 +12,7 @@ class OffsetStack {
   void duplicateLastItem();
   void increaseOffset();
   void decreaseOffset();
+  int getTopOffset();
 };
 
 #endif

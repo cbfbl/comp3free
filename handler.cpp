@@ -14,4 +14,9 @@ void Handler::handleStatmentTypeId(Basictype* type, Basictype* id) {
   if (symbol_table.exists(id->getLexeme())) {
     return;
   }
+  offset_stack.increaseOffset();
+  id->setGlobalOffset(offset_stack.getTopOffset());
+  id->setLocalOffset(symbol_table.getTopScopeSize());
+  id->setType(type->getLexeme());
+  symbol_table.insertItem(id);
 }
