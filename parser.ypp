@@ -34,14 +34,20 @@
 Program	: {handler.initialize();} Funcs 								{handler.handleRule(1,vector<Basictype*>());};
 Funcs : /*epsilon*/ 													{handler.handleRule(2,vector<Basictype*>());};
 Funcs : FuncDecl Funcs 													{handler.handleRule(3,vector<Basictype*>());};
-FuncDecl : RetType ID LPAREN Formals RPAREN LBRACE Statements RBRACE 	{handler.handleRule(4,vector<Basictype*>());};
+FuncDecl : RetType ID LPAREN Formals RPAREN LBRACE Statements RBRACE 	{
+    vector<Basictype*> vec{$1,$2,new Container("nothing")};
+    handler.handleRule(4,vec);
+};
 RetType : Type															{handler.handleRule(5,vector<Basictype*>());};
 RetType : VOID 															{handler.handleRule(6,vector<Basictype*>());};
 Formals : /*epsilon*/ 													{handler.handleRule(7,vector<Basictype*>());};
 Formals : FormalsList 												    {handler.handleRule(8,vector<Basictype*>());};
 FormalsList : FormalDecl 												{handler.handleRule(9,vector<Basictype*>());};
 FormalsList : FormalDecl COMMA FormalsList 								{handler.handleRule(10,vector<Basictype*>());};
-FormalDecl : Type ID 													{handler.handleRule(11,vector<Basictype*>());};
+FormalDecl : Type ID 													{
+    vector<Basictype*> vec{$1,$2};
+    handler.handleRule(11,vec);
+};
 Statements : Statement 													{handler.handleRule(12,vector<Basictype*>());};
 Statements : Statements Statement 										{handler.handleRule(13,vector<Basictype*>());};
 Statement : LBRACE Statements RBRACE 									{handler.handleRule(14,vector<Basictype*>());};

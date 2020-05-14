@@ -27,6 +27,7 @@ class Handler {
                                      Basictype* exp);
   void handleFunctionDeclartion(Basictype* ret_type, Basictype* id,
                                 Basictype* args);
+  void handleFormalDeclTypeId(Basictype* type, Basictype* id);
 
  public:
   void handleRule(int rule_number, vector<Basictype*> params);

@@ -11,6 +11,12 @@ void Handler::handleRule(int rule_number, vector<Basictype*> params) {
   }
   cout << endl;
   switch (rule_number) {
+    case 4:
+      handleFunctionDeclartion(params[0], params[1], params[2]);
+      break;
+    case 11:
+      handleFormalDeclTypeId(params[0], params[1]);
+      break;
     case 15:
       handleStatmentTypeId(params[0], params[1]);
       break;
@@ -75,4 +81,12 @@ void Handler::handleFunctionDeclartion(Basictype* ret_type, Basictype* id,
     i--;
   }
   symbol_table.insertItem(func, false);
+}
+
+void Handler::handleFormalDeclTypeId(Basictype* type, Basictype* id) {
+  if (symbol_table.exists(((Id*)id)->getName())) {
+    return;
+  }
+  id->setType(type->getType());
+  symbol_table.insertItem(id, false);
 }
