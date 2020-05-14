@@ -14,8 +14,14 @@ Basictype* Handler::handleRule(int rule_number, vector<Basictype*> params) {
     case 4:
       handleFunctionDeclartion(params[0], params[1], params[2]);
       break;
+    case 7:
+      return handleFormalsEpsilon();
+      break;
     case 9:
       return handleFormalDecl(params[0]);
+      break;
+    case 10:
+      return handleFormalDeclFormalList(params[0], params[1]);
       break;
     case 11:
       return handleFormalDeclTypeId(params[0], params[1]);
@@ -100,3 +106,11 @@ Basictype* Handler::handleFormalDecl(Basictype* formal_decl) {
   Container* con = new Container(formal_decl->getLexeme().c_str());
   return con;
 }
+
+Basictype* Handler::handleFormalDeclFormalList(Basictype* formal_decl,
+                                               Basictype* formal_list) {
+  ((Container*)formal_list)->addVariable(formal_decl);
+  return formal_list;
+}
+
+Basictype* Handler::handleFormalsEpsilon() { return new Container("epsilon"); }

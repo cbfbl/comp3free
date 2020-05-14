@@ -29,6 +29,9 @@ class Handler {
                                 Basictype* args);
   Basictype* handleFormalDeclTypeId(Basictype* type, Basictype* id);
   Basictype* handleFormalDecl(Basictype* formal_decl);
+  Basictype* handleFormalDeclFormalList(Basictype* formal_decl,
+                                        Basictype* formal_list);
+  Basictype* handleFormalsEpsilon();
 
  public:
   Basictype* handleRule(int rule_number, vector<Basictype*> params);
