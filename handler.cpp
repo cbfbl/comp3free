@@ -55,4 +55,5 @@ void Handler::handleStatmentTypeIdAssignExp(Basictype* type, Basictype* id,
   if (type->getType() != exp->getType()) {
     return;
   }
+  handleStatmentTypeId(type, id);
 }
