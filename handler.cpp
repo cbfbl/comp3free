@@ -62,4 +62,5 @@ void Handler::handleFunctionDeclartion(Basictype* ret_type, Basictype* id,
                                        Basictype* args) {
   string func_type = output::makeFunctionType(ret_type->getType(),
                                               ((Container*)args)->getTypes());
+  Function* func = new Function(((Id*)id)->getName());
 }

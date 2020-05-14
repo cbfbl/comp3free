@@ -13,7 +13,8 @@ class Basictype {
   string type;
 
  public:
-  Basictype(char* yytext);
+  Basictype();
+  Basictype(const char* yytext);
   string& getLexeme();
   int getGlobalOffset();
   int getLocalOffset();
@@ -34,14 +35,15 @@ class Id : public Basictype {
   string name;
 
  public:
-  Id(char* yytext);
+  Id(const char* yytext);
+  string getName();
 };
 
 class Bool : public Basictype {
   bool bool_val;
 
  public:
-  Bool(char* yytext);
+  Bool(const char* yytext);
 };
 
 class Container : public Basictype {
@@ -49,9 +51,17 @@ class Container : public Basictype {
   vector<string> variables_types;
 
  public:
-  Container(char* yytext);
+  Container(const char* yytext);
   vector<Basictype*> getVariables();
   vector<string>& getTypes();
+};
+
+class Function : public Container {
+  string ret_type;
+
+ public:
+  Function(const char* yytext);
+  Function(string yytext);
 };
 
 #define YYSTYPE Basictype*
