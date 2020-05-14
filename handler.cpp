@@ -7,7 +7,20 @@ void Handler::handleRule(int rule_number, vector<Basictype*> params) {
     cout << param->getLexeme() + " ";
   }
   cout << endl;
+  switch (rule_number) {
+    case 15:
+      handleStatmentTypeId(params[0], params[1]);
+      break;
+
+    default:
+      break;
+  }
   return;
+}
+
+void Handler::initialize() {
+  offset_stack.initialize();
+  symbol_table.insertScope();
 }
 
 void Handler::handleStatmentTypeId(Basictype* type, Basictype* id) {

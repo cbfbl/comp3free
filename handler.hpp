@@ -24,6 +24,7 @@ class Handler {
 
  public:
   void handleRule(int rule_number, vector<Basictype*> params);
+  void initialize();
 };
 
 #endif

@@ -14,6 +14,7 @@ class OffsetStack {
   void increaseOffset();
   void decreaseOffset();
   int getTopOffset();
+  void initialize();
 };
 
 #endif
