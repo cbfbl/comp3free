@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include "hw3_output.hpp"
 #include "offsetstack.hpp"
 #include "symboltable.hpp"
 #include "types.hpp"
@@ -24,6 +25,8 @@ class Handler {
   void handleStatmentTypeId(Basictype* type, Basictype* id);
   void handleStatmentTypeIdAssignExp(Basictype* type, Basictype* id,
                                      Basictype* exp);
+  void handleFunctionDeclartion(Basictype* ret_type, Basictype* id,
+                                Basictype* args);
 
  public:
   void handleRule(int rule_number, vector<Basictype*> params);

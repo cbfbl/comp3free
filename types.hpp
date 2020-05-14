@@ -2,7 +2,9 @@
 #define TYPES_H
 
 #include <string>
+#include <vector>
 using std::string;
+using std::vector;
 
 class Basictype {
   string lexeme;
@@ -12,12 +14,12 @@ class Basictype {
 
  public:
   Basictype(char* yytext);
-  string getLexeme();
+  string& getLexeme();
   int getGlobalOffset();
   int getLocalOffset();
   void setGlobalOffset(int global_set);
   void setLocalOffset(int local_set);
-  string getType();
+  string& getType();
   void setType(string type_set);
 };
 
@@ -40,6 +42,16 @@ class Bool : public Basictype {
 
  public:
   Bool(char* yytext);
+};
+
+class Container : public Basictype {
+  vector<Basictype*> variables_list;
+  vector<string> variables_types;
+
+ public:
+  Container(char* yytext);
+  vector<Basictype*> getVariables();
+  vector<string>& getTypes();
 };
 
 #define YYSTYPE Basictype*

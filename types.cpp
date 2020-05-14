@@ -12,7 +12,7 @@ Basictype::Basictype(char* yytext) : lexeme(yytext) {
   }
 }
 
-string Basictype::getLexeme() { return lexeme; }
+string& Basictype::getLexeme() { return lexeme; }
 
 int Basictype::getGlobalOffset() { return global_offset; }
 
@@ -22,7 +22,7 @@ void Basictype::setGlobalOffset(int global_set) { global_offset = global_set; }
 
 void Basictype::setLocalOffset(int local_set) { local_offset = local_set; }
 
-string Basictype::getType() { return type; }
+string& Basictype::getType() { return type; }
 
 void Basictype::setType(string type_set) { type = type_set; }
 
@@ -40,3 +40,12 @@ Bool::Bool(char* yytext) : Basictype(yytext) {
     bool_val = false;
   }
 }
+
+Container::Container(char* yytext) : Basictype(yytext) {
+  for (Basictype*& basic_type : variables_list) {
+    variables_types.push_back(basic_type->getType());
+  }
+}
+
+vector<Basictype*> Container::getVariables() { return variables_list; }
+vector<string>& Container::getTypes() { return variables_types; }
