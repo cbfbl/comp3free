@@ -54,6 +54,7 @@ class Container : public Basictype {
   Container(const char* yytext);
   vector<Basictype*> getVariables();
   vector<string>& getTypes();
+  void addVariable(Basictype* var);
 };
 
 class Function : public Container {
@@ -62,6 +63,7 @@ class Function : public Container {
  public:
   Function(const char* yytext);
   Function(string yytext);
+  void setRetType(string set_ret_type);
 };
 
 #define YYSTYPE Basictype*

@@ -37,13 +37,14 @@ Bool::Bool(const char* yytext) : Basictype(yytext) {
   }
 }
 
-Container::Container(const char* yytext) : Basictype(yytext) {
-  for (Basictype*& basic_type : variables_list) {
-    variables_types.push_back(basic_type->getType());
-  }
-}
+Container::Container(const char* yytext) : Basictype(yytext) {}
 vector<Basictype*> Container::getVariables() { return variables_list; }
 vector<string>& Container::getTypes() { return variables_types; }
+void Container::addVariable(Basictype* var) {
+  variables_list.push_back(var);
+  variables_types.push_back(var->getType());
+}
 
 Function::Function(const char* yytext) : Container(yytext) {}
 Function::Function(string yytext) : Container(yytext.c_str()) {}
+void Function::setRetType(string set_ret_type) { ret_type = set_ret_type; }

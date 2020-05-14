@@ -60,7 +60,19 @@ void Handler::handleStatmentTypeIdAssignExp(Basictype* type, Basictype* id,
 
 void Handler::handleFunctionDeclartion(Basictype* ret_type, Basictype* id,
                                        Basictype* args) {
+  if (symbol_table.exists(((Id*)id)->getName())) {
+    return;
+  }
   string func_type = output::makeFunctionType(ret_type->getType(),
                                               ((Container*)args)->getTypes());
   Function* func = new Function(((Id*)id)->getName());
+  func->setType(func_type);
+  func->setRetType(ret_type->getType());
+  int i = -1;
+  for (Basictype* basic_type : ((Container*)args)->getVariables()) {
+    basic_type->setGlobalOffset(i);
+    func->addVariable(basic_type);
+    i--;
+  }
+  symbol_table.insertItem(func, false);
 }

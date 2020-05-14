@@ -16,7 +16,7 @@ class SymbolTable {
  public:
   void insertScope();
   void removeScope();
-  void insertItem(Basictype* item);
+  void insertItem(Basictype* item, bool insert_to_scope = true);
   bool exists(string id);
   int getTopScopeSize();
 };
