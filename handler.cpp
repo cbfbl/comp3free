@@ -25,3 +25,8 @@ void Handler::removeScope() {
   symbol_table.removeScope();
   offset_stack.removeLastItem();
 }
+
+void Handler::insertScope() {
+  symbol_table.insertScope();
+  offset_stack.duplicateLastItem();
+}
