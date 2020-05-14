@@ -41,8 +41,8 @@ continue                        {yylval=new Basictype(yytext); return CONTINUE;}
 ==|!=                           {yylval=new Basictype(yytext); return RELEQ;};
 [\*\/]                          {yylval=new Basictype(yytext); return BINOPH;};
 [\+\-]                          {yylval=new Basictype(yytext); return BINOPL;};
-[a-zA-z][a-zA-z0-9]*            {yylval=new Basictype(yytext); return ID;};
-0|[1-9][0-9]*                   {yylval=new Basictype(yytext); return NUM;};
+[a-zA-z][a-zA-z0-9]*            {yylval=new Id(yytext); return ID;};
+0|[1-9][0-9]*                   {yylval=new Num(yytext); return NUM;};
 \"([^\n\r\"\\]|\\[rnt"\\])+\"	{yylval=new Basictype(yytext); return STRING;};
 <<EOF>>                         {yylval=new Basictype(yytext); return 0;};
 [\r\n\t ]|\/\/[^\r\n]*[\r|\n|\r\n]?	    ;

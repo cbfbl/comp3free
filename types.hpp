@@ -21,11 +21,11 @@ class Basictype {
   void setType(string type_set);
 };
 
-class Int : public Basictype {
+class Num : public Basictype {
   int lexeme_value;
 
  public:
-  Int(char* yytext);
+  Num(char* yytext);
 };
 
 class Id : public Basictype {
@@ -33,6 +33,13 @@ class Id : public Basictype {
 
  public:
   Id(char* yytext);
+};
+
+class Bool : public Basictype {
+  bool bool_val;
+
+ public:
+  Bool(char* yytext);
 };
 
 #define YYSTYPE Basictype*

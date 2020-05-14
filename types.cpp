@@ -1,6 +1,16 @@
 #include "types.hpp"
 
-Basictype::Basictype(char* yytext) : lexeme(yytext) {}
+Basictype::Basictype(char* yytext) : lexeme(yytext) {
+  if (lexeme == "int") {
+    setType("INT");
+  } else if (lexeme == "bool") {
+    setType("BOOL");
+  } else if (lexeme == "b" || lexeme == "byte") {
+    setType("BYTE");
+  } else {
+    setType("UNKNOWN");
+  }
+}
 
 string Basictype::getLexeme() { return lexeme; }
 
@@ -16,7 +26,17 @@ string Basictype::getType() { return type; }
 
 void Basictype::setType(string type_set) { type = type_set; }
 
-Int::Int(char* yytext)
-    : Basictype(yytext), lexeme_value(stoi(string(yytext))) {}
+Num::Num(char* yytext)
+    : Basictype(yytext), lexeme_value(std::stoi(string(yytext))) {
+  this->setType("INT OR BYTE");
+}
 
 Id::Id(char* yytext) : Basictype(yytext), name(yytext) {}
+
+Bool::Bool(char* yytext) : Basictype(yytext) {
+  if (this->getLexeme() == "true") {
+    bool_val = true;
+  } else if (this->getLexeme() == "false") {
+    bool_val = false;
+  }
+}

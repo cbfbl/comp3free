@@ -18,9 +18,12 @@ class Handler {
   SymbolTable symbol_table;
   OffsetStack offset_stack;
 
-  void handleStatmentTypeId(Basictype* type, Basictype* id);
   void insertScope();
   void removeScope();
+
+  void handleStatmentTypeId(Basictype* type, Basictype* id);
+  void handleStatmentTypeIdAssignExp(Basictype* type, Basictype* id,
+                                     Basictype* exp);
 
  public:
   void handleRule(int rule_number, vector<Basictype*> params);
