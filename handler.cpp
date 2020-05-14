@@ -20,3 +20,8 @@ void Handler::handleStatmentTypeId(Basictype* type, Basictype* id) {
   symbol_table.insertItem(id);
   offset_stack.increaseOffset();
 }
+
+void Handler::removeScope() {
+  symbol_table.removeScope();
+  offset_stack.removeLastItem();
+}

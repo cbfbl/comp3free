@@ -19,6 +19,8 @@ class Handler {
   OffsetStack offset_stack;
 
   void handleStatmentTypeId(Basictype* type, Basictype* id);
+  void insertScope();
+  void removeScope();
 
  public:
   void handleRule(int rule_number, vector<Basictype*> params);
