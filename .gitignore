@@ -5,3 +5,5 @@ makefile
 parser.tab.cpp
 parser.tab.hpp
 /tests
+settings.json
+/.vscode
