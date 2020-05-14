@@ -27,10 +27,11 @@ class Handler {
                                      Basictype* exp);
   void handleFunctionDeclartion(Basictype* ret_type, Basictype* id,
                                 Basictype* args);
-  void handleFormalDeclTypeId(Basictype* type, Basictype* id);
+  Basictype* handleFormalDeclTypeId(Basictype* type, Basictype* id);
+  Basictype* handleFormalDecl(Basictype* formal_decl);
 
  public:
-  void handleRule(int rule_number, vector<Basictype*> params);
+  Basictype* handleRule(int rule_number, vector<Basictype*> params);
   void initialize();
 };
 

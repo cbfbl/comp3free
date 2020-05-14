@@ -1,6 +1,6 @@
 #include "handler.hpp"
 
-void Handler::handleRule(int rule_number, vector<Basictype*> params) {
+Basictype* Handler::handleRule(int rule_number, vector<Basictype*> params) {
   int x = 0;
   cout << "Rule number " << rule_number << " was called" << endl;
   if (params.size() > 0) {
@@ -14,8 +14,11 @@ void Handler::handleRule(int rule_number, vector<Basictype*> params) {
     case 4:
       handleFunctionDeclartion(params[0], params[1], params[2]);
       break;
+    case 9:
+      return handleFormalDecl(params[0]);
+      break;
     case 11:
-      handleFormalDeclTypeId(params[0], params[1]);
+      return handleFormalDeclTypeId(params[0], params[1]);
       break;
     case 15:
       handleStatmentTypeId(params[0], params[1]);
@@ -27,7 +30,7 @@ void Handler::handleRule(int rule_number, vector<Basictype*> params) {
     default:
       break;
   }
-  return;
+  return NULL;
 }
 
 void Handler::initialize() {
@@ -83,10 +86,17 @@ void Handler::handleFunctionDeclartion(Basictype* ret_type, Basictype* id,
   symbol_table.insertItem(func, false);
 }
 
-void Handler::handleFormalDeclTypeId(Basictype* type, Basictype* id) {
+Basictype* Handler::handleFormalDeclTypeId(Basictype* type, Basictype* id) {
   if (symbol_table.exists(((Id*)id)->getName())) {
-    return;
+    cout << "error" << endl;
+    exit(0);
   }
   id->setType(type->getType());
   symbol_table.insertItem(id, false);
+  return id;
+}
+
+Basictype* Handler::handleFormalDecl(Basictype* formal_decl) {
+  Container* con = new Container(formal_decl->getLexeme().c_str());
+  return con;
 }
