@@ -41,7 +41,7 @@ Funcs : FuncDecl Funcs 													{
     handler.handleRule(3,vector<Basictype*>());
 };
 FuncDecl : RetType ID LPAREN Formals RPAREN LBRACE {
-    handler.setExpectedRetType($1);
+    handler.setExpectedRetType($1->getType());
 } Statements RBRACE 	{
     vector<Basictype*> vec{$1,$2,$4};
     handler.handleRule(4,vec);
@@ -92,7 +92,10 @@ Statement : Call SC 													{handler.handleRule(18,vector<Basictype*>());};
 Statement : RETURN SC													{
     handler.handleRule(19,vector<Basictype*>());
 };
-Statement : RETURN Exp SC												{handler.handleRule(20,vector<Basictype*>());};
+Statement : RETURN Exp SC												{
+    vector<Basictype*> vec{$2};
+    handler.handleRule(20,vec);
+};
 Statement : IF LPAREN Exp RPAREN Statement %prec THEN					{handler.handleRule(21,vector<Basictype*>());};
 Statement : IF LPAREN Exp RPAREN Statement ELSE Statement				{handler.handleRule(22,vector<Basictype*>());};
 Statement : WHILE LPAREN Exp RPAREN Statement %prec THEN				{handler.handleRule(23,vector<Basictype*>());};

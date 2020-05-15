@@ -50,6 +50,9 @@ Basictype* Handler::handleRule(int rule_number, vector<Basictype*> params) {
     case 19:
       handleReturnVoid();
       break;
+    case 20:
+      handleReturnWithType(params[0]);
+      break;
 
     default:
       break;
@@ -85,8 +88,8 @@ void Handler::insertScope() {
   offset_stack.duplicateLastItem();
 }
 
-void Handler::setExpectedRetType(Basictype* ret_type) {
-  expected_ret_type = ret_type->getType();
+void Handler::setExpectedRetType(string ret_type) {
+  expected_ret_type = ret_type;
 }
 
 // rule 1
@@ -196,4 +199,12 @@ void Handler::handleReturnVoid() {
   if (expected_ret_type != "VOID") {
     return;
   }
+}
+
+// rule 20
+void Handler::handleReturnWithType(Basictype* ret_type) {
+  if (expected_ret_type != ret_type->getType()) {
+    return;
+  }
+  setExpectedRetType("VOID");
 }

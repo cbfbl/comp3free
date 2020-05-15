@@ -37,6 +37,7 @@ class Handler {
   Basictype* handleRettypeType(Basictype* type);
   Basictype* handleRettypeVoid(Basictype* type_void);
   Basictype* handleIdAssignExp(Basictype* id, Basictype* exp);
+  void handleReturnWithType(Basictype* ret_type);
   void handleReturnVoid();
   void finalize();
 
@@ -44,7 +45,7 @@ class Handler {
   Handler();
   Basictype* handleRule(int rule_number, vector<Basictype*> params);
   void initialize();
-  void setExpectedRetType(Basictype* ret_type);
+  void setExpectedRetType(string ret_type);
 };
 
 #endif
