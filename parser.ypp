@@ -122,7 +122,10 @@ Exp : FALSE															    {handler.handleRule(43,vector<Basictype*>());};
 Exp : NOT Exp															{handler.handleRule(44,vector<Basictype*>());};
 Exp : Exp AND Exp													    {handler.handleRule(45,vector<Basictype*>());};
 Exp : Exp OR Exp 														{handler.handleRule(46,vector<Basictype*>());};
-Exp : Exp RELOP Exp														{handler.handleRule(47,vector<Basictype*>());};
+Exp : Exp RELOP Exp														{
+    vector<Basictype*> vec{$1,$3};
+    $$=handler.handleRule(47,vec);
+};
 Exp : Exp RELEQ Exp														{handler.handleRule(48,vector<Basictype*>());};
 
 %%

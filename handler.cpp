@@ -53,6 +53,9 @@ Basictype* Handler::handleRule(int rule_number, vector<Basictype*> params) {
     case 20:
       handleReturnWithType(params[0]);
       break;
+    case 47:
+      return handleExpRelopExp(params[0], params[1]);
+      break;
 
     default:
       break;
@@ -207,4 +210,13 @@ void Handler::handleReturnWithType(Basictype* ret_type) {
     return;
   }
   setExpectedRetType("VOID");
+}
+
+// rule 47
+Basictype* Handler::handleExpRelopExp(Basictype* exp_left,
+                                      Basictype* exp_right) {
+  if (exp_left->getType() != exp_right->getType()) {
+    return new Basictype("ERROR");
+  }
+  return new Bool("TRUE");
 }

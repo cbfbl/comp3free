@@ -37,6 +37,7 @@ class Handler {
   Basictype* handleRettypeType(Basictype* type);
   Basictype* handleRettypeVoid(Basictype* type_void);
   Basictype* handleIdAssignExp(Basictype* id, Basictype* exp);
+  Basictype* handleExpRelopExp(Basictype* exp_left, Basictype* exp_right);
   void handleReturnWithType(Basictype* ret_type);
   void handleReturnVoid();
   void finalize();
