@@ -17,6 +17,12 @@ Basictype* Handler::handleRule(int rule_number, vector<Basictype*> params) {
     case 4:
       handleFunctionDeclartion(params[0], params[1], params[2]);
       break;
+    case 5:
+      return handleRettypeType(params[0]);
+      break;
+    case 6:
+      return handleRettypeVoid(params[0]);
+      break;
     case 7:
       return handleFormalsEpsilon();
       break;
@@ -52,7 +58,7 @@ void Handler::removeScope() {
   vector<Basictype*> last_scope = symbol_table.getLastScopeData();
   for (Basictype* basic_p : last_scope) {
     if (basic_p->getType() == "FUNC") {
-      output::printID(basic_p->getLexeme(), 0,
+      output::printID(basic_p->getLexeme(), basic_p->getGlobalOffset(),
                       ((Function*)basic_p)->getFunctionType());
     } else {
       output::printID(basic_p->getLexeme(), basic_p->getGlobalOffset(),
@@ -69,6 +75,11 @@ void Handler::insertScope() {
 }
 
 void Handler::finalize() { removeScope(); }
+
+Basictype* Handler::handleRettypeType(Basictype* type) { return type; }
+Basictype* Handler::handleRettypeVoid(Basictype* void_type) {
+  return void_type;
+}
 
 void Handler::handleStatmentTypeId(Basictype* type, Basictype* id) {
   if (symbol_table.exists(id->getLexeme())) {
@@ -100,13 +111,14 @@ void Handler::handleFunctionDeclartion(Basictype* ret_type, Basictype* id,
   func->setType("FUNC");
   func->setFunctionType(func_type);
   func->setRetType(ret_type->getType());
+  func->setGlobalOffset(0);
   int i = -1;
   for (Basictype* basic_type : ((Container*)args)->getVariables()) {
     basic_type->setGlobalOffset(i);
     func->addVariable(basic_type);
     i--;
   }
-  symbol_table.insertItem(func, false);
+  symbol_table.insertItem(func);
 }
 
 Basictype* Handler::handleFormalDeclTypeId(Basictype* type, Basictype* id) {
@@ -115,7 +127,7 @@ Basictype* Handler::handleFormalDeclTypeId(Basictype* type, Basictype* id) {
     exit(0);
   }
   id->setType(type->getType());
-  symbol_table.insertItem(id, false);
+  symbol_table.insertItem(id);
   return id;
 }
 

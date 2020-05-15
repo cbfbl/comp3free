@@ -7,6 +7,8 @@ Basictype::Basictype(const char* yytext) : lexeme(yytext) {
     setType("BOOL");
   } else if (lexeme == "b" || lexeme == "byte") {
     setType("BYTE");
+  } else if (lexeme == "void") {
+    setType("VOID");
   } else {
     setType("UNKNOWN");
   }

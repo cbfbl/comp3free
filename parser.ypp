@@ -44,8 +44,14 @@ FuncDecl : RetType ID LPAREN Formals RPAREN LBRACE Statements RBRACE 	{
     vector<Basictype*> vec{$1,$2,$4};
     handler.handleRule(4,vec);
 };
-RetType : Type															{handler.handleRule(5,vector<Basictype*>());};
-RetType : VOID 															{handler.handleRule(6,vector<Basictype*>());};
+RetType : Type															{
+    vector<Basictype*> vec{$1};
+    handler.handleRule(5,vec);
+};
+RetType : VOID 															{
+    vector<Basictype*> vec{$1};
+    handler.handleRule(6,vec);
+};
 Formals : /*epsilon*/ 													{
     $$=handler.handleRule(7,vector<Basictype*>());
 };
