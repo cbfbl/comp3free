@@ -124,6 +124,7 @@ void Handler::handleFunctionDeclartion(Basictype* ret_type, Basictype* id,
       output::makeFunctionType(ret_type->getType(), params_types);
   func->setFunctionType(func_type);
   symbol_table.insertItem(func);
+  removeScope();
 }
 
 // rule 5

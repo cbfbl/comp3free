@@ -20,8 +20,7 @@ class Handler {
   OffsetStack offset_stack;
   string expected_ret_type;
 
-  void insertScope();
-  void removeScope();
+
 
   void handleStatmentTypeId(Basictype* type, Basictype* id);
   void handleStatmentTypeIdAssignExp(Basictype* type, Basictype* id,
@@ -47,6 +46,8 @@ class Handler {
   Basictype* handleRule(int rule_number, vector<Basictype*> params);
   void initialize();
   void setExpectedRetType(string ret_type);
+  void insertScope();
+  void removeScope();
 };
 
 #endif
