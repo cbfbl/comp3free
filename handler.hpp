@@ -18,6 +18,7 @@ using std::vector;
 class Handler {
   SymbolTable symbol_table;
   OffsetStack offset_stack;
+  string expected_ret_type;
 
   void insertScope();
   void removeScope();
@@ -36,11 +37,14 @@ class Handler {
   Basictype* handleRettypeType(Basictype* type);
   Basictype* handleRettypeVoid(Basictype* type_void);
   Basictype* handleIdAssignExp(Basictype* id, Basictype* exp);
+  void handleReturnVoid();
   void finalize();
 
  public:
+  Handler();
   Basictype* handleRule(int rule_number, vector<Basictype*> params);
   void initialize();
+  void setExpectedRetType(Basictype* ret_type);
 };
 
 #endif

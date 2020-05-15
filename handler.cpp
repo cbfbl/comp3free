@@ -47,12 +47,17 @@ Basictype* Handler::handleRule(int rule_number, vector<Basictype*> params) {
     case 17:
       return handleIdAssignExp(params[0], params[1]);
       break;
+    case 19:
+      handleReturnVoid();
+      break;
 
     default:
       break;
   }
   return NULL;
 }
+
+Handler::Handler() : expected_ret_type("VOID") {}
 
 void Handler::initialize() {
   offset_stack.initialize();
@@ -80,6 +85,10 @@ void Handler::insertScope() {
   offset_stack.duplicateLastItem();
 }
 
+void Handler::setExpectedRetType(Basictype* ret_type) {
+  expected_ret_type = ret_type->getType();
+}
+
 // rule 1
 void Handler::finalize() { removeScope(); }
 
@@ -87,6 +96,9 @@ void Handler::finalize() { removeScope(); }
 void Handler::handleFunctionDeclartion(Basictype* ret_type, Basictype* id,
                                        Basictype* args) {
   if (symbol_table.exists(((Id*)id)->getName())) {
+    return;
+  }
+  if (expected_ret_type != "VOID") {
     return;
   }
   vector<string> params_types;
@@ -177,4 +189,11 @@ Basictype* Handler::handleIdAssignExp(Basictype* id, Basictype* exp) {
     return new Basictype("ERROR");
   }
   return id;
+}
+
+// rule 19
+void Handler::handleReturnVoid() {
+  if (expected_ret_type != "VOID") {
+    return;
+  }
 }
