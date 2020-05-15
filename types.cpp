@@ -48,3 +48,7 @@ void Container::addVariable(Basictype* var) {
 Function::Function(const char* yytext) : Container(yytext) {}
 Function::Function(string yytext) : Container(yytext.c_str()) {}
 void Function::setRetType(string set_ret_type) { ret_type = set_ret_type; }
+string Function::getFunctionType() { return function_type; }
+void Function::setFunctionType(string set_func_type) {
+  function_type = set_func_type;
+}

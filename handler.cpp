@@ -11,6 +11,9 @@ Basictype* Handler::handleRule(int rule_number, vector<Basictype*> params) {
   }
   cout << endl;
   switch (rule_number) {
+    case 1:
+      finalize();
+      break;
     case 4:
       handleFunctionDeclartion(params[0], params[1], params[2]);
       break;
@@ -45,6 +48,17 @@ void Handler::initialize() {
 }
 
 void Handler::removeScope() {
+  output::endScope();
+  vector<Basictype*> last_scope = symbol_table.getLastScopeData();
+  for (Basictype* basic_p : last_scope) {
+    if (basic_p->getType() == "FUNC") {
+      output::printID(basic_p->getLexeme(), 0,
+                      ((Function*)basic_p)->getFunctionType());
+    } else {
+      output::printID(basic_p->getLexeme(), basic_p->getGlobalOffset(),
+                      basic_p->getType());
+    }
+  }
   symbol_table.removeScope();
   offset_stack.removeLastItem();
 }
@@ -54,12 +68,14 @@ void Handler::insertScope() {
   offset_stack.duplicateLastItem();
 }
 
+void Handler::finalize() { removeScope(); }
+
 void Handler::handleStatmentTypeId(Basictype* type, Basictype* id) {
   if (symbol_table.exists(id->getLexeme())) {
     return;
   }
   id->setGlobalOffset(offset_stack.getTopOffset());
-  id->setLocalOffset(symbol_table.getTopScopeSize());
+  id->setLocalOffset(symbol_table.getLastScopeSize());
   id->setType(type->getType());
   symbol_table.insertItem(id);
   offset_stack.increaseOffset();
@@ -81,7 +97,8 @@ void Handler::handleFunctionDeclartion(Basictype* ret_type, Basictype* id,
   string func_type = output::makeFunctionType(ret_type->getType(),
                                               ((Container*)args)->getTypes());
   Function* func = new Function(((Id*)id)->getName());
-  func->setType(func_type);
+  func->setType("FUNC");
+  func->setFunctionType(func_type);
   func->setRetType(ret_type->getType());
   int i = -1;
   for (Basictype* basic_type : ((Container*)args)->getVariables()) {

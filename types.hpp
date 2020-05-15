@@ -59,11 +59,14 @@ class Container : public Basictype {
 
 class Function : public Container {
   string ret_type;
+  string function_type;
 
  public:
   Function(const char* yytext);
   Function(string yytext);
   void setRetType(string set_ret_type);
+  string getFunctionType();
+  void setFunctionType(string set_func_type);
 };
 
 #define YYSTYPE Basictype*

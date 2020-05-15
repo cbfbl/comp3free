@@ -31,9 +31,15 @@
 
 %%
 
-Program	: {handler.initialize();} Funcs 								{handler.handleRule(1,vector<Basictype*>());};
-Funcs : /*epsilon*/ 													{handler.handleRule(2,vector<Basictype*>());};
-Funcs : FuncDecl Funcs 													{handler.handleRule(3,vector<Basictype*>());};
+Program	: {handler.initialize();} Funcs 								{
+    handler.handleRule(1,vector<Basictype*>());
+};
+Funcs : /*epsilon*/ 													{
+    handler.handleRule(2,vector<Basictype*>());
+};
+Funcs : FuncDecl Funcs 													{
+    handler.handleRule(3,vector<Basictype*>());
+};
 FuncDecl : RetType ID LPAREN Formals RPAREN LBRACE Statements RBRACE 	{
     vector<Basictype*> vec{$1,$2,$4};
     handler.handleRule(4,vec);

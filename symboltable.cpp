@@ -25,4 +25,6 @@ bool SymbolTable::exists(string id) {
   return false;
 }
 
-int SymbolTable::getTopScopeSize() { return scopes.back().size(); }
+int SymbolTable::getLastScopeSize() { return scopes.back().size(); }
+
+vector<Basictype*> SymbolTable::getLastScopeData() { return scopes.back(); }

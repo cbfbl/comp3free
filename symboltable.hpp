@@ -18,7 +18,8 @@ class SymbolTable {
   void removeScope();
   void insertItem(Basictype* item, bool insert_to_scope = true);
   bool exists(string id);
-  int getTopScopeSize();
+  int getLastScopeSize();
+  vector<Basictype*> getLastScopeData();
 };
 
 #endif
