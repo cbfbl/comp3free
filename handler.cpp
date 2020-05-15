@@ -86,11 +86,9 @@ void Handler::handleFunctionDeclartion(Basictype* ret_type, Basictype* id,
   if (symbol_table.exists(((Id*)id)->getName())) {
     return;
   }
-  string func_type = output::makeFunctionType(ret_type->getType(),
-                                              ((Container*)args)->getTypes());
+  vector<string> params_types;
   Function* func = new Function(((Id*)id)->getName());
   func->setType("FUNC");
-  func->setFunctionType(func_type);
   func->setRetType(ret_type->getType());
   func->setGlobalOffset(0);
   int i = -1;
@@ -99,7 +97,11 @@ void Handler::handleFunctionDeclartion(Basictype* ret_type, Basictype* id,
     basic_type->setGlobalOffset(i);
     func->addVariable(basic_type);
     i--;
+    params_types.push_back(basic_type->getType());
   }
+  string func_type =
+      output::makeFunctionType(ret_type->getType(), params_types);
+  func->setFunctionType(func_type);
   symbol_table.insertItem(func);
 }
 

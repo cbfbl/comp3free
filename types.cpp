@@ -37,15 +37,12 @@ Bool::Bool(const char* yytext) : Basictype(yytext) {
   } else if (this->getLexeme() == "false") {
     bool_val = false;
   }
+  this->setType("BOOL");
 }
 
 Container::Container(const char* yytext) : Basictype(yytext) {}
 vector<Basictype*> Container::getVariables() { return variables_list; }
-vector<string>& Container::getTypes() { return variables_types; }
-void Container::addVariable(Basictype* var) {
-  variables_list.push_back(var);
-  variables_types.push_back(var->getType());
-}
+void Container::addVariable(Basictype* var) { variables_list.push_back(var); }
 
 Function::Function(const char* yytext) : Container(yytext) {}
 Function::Function(string yytext) : Container(yytext.c_str()) {}

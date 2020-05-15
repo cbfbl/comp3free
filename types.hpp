@@ -1,8 +1,11 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#include <iostream>
 #include <string>
 #include <vector>
+using std::cout;
+using std::endl;
 using std::string;
 using std::vector;
 
@@ -53,7 +56,6 @@ class Container : public Basictype {
  public:
   Container(const char* yytext);
   vector<Basictype*> getVariables();
-  vector<string>& getTypes();
   void addVariable(Basictype* var);
 };
 
