@@ -35,6 +35,7 @@ class Handler {
   Basictype* handleFormalsFormalList(Basictype* formals);
   Basictype* handleRettypeType(Basictype* type);
   Basictype* handleRettypeVoid(Basictype* type_void);
+  Basictype* handleIdAssignExp(Basictype* id, Basictype* exp);
   void finalize();
 
  public:

@@ -44,6 +44,9 @@ Basictype* Handler::handleRule(int rule_number, vector<Basictype*> params) {
     case 16:
       handleStatmentTypeIdAssignExp(params[0], params[1], params[2]);
       break;
+    case 17:
+      return handleIdAssignExp(params[0], params[1]);
+      break;
 
     default:
       break;
@@ -165,4 +168,13 @@ void Handler::handleStatmentTypeIdAssignExp(Basictype* type, Basictype* id,
     return;
   }
   handleStatmentTypeId(type, id);
+}
+
+// rule 17
+
+Basictype* Handler::handleIdAssignExp(Basictype* id, Basictype* exp) {
+  if (id->getType() != exp->getType()) {
+    return new Basictype("ERROR");
+  }
+  return id;
 }
