@@ -46,16 +46,19 @@ FuncDecl : RetType ID LPAREN Formals RPAREN LBRACE Statements RBRACE 	{
 };
 RetType : Type															{
     vector<Basictype*> vec{$1};
-    handler.handleRule(5,vec);
+    $$=handler.handleRule(5,vec);
 };
 RetType : VOID 															{
     vector<Basictype*> vec{$1};
-    handler.handleRule(6,vec);
+    $$=handler.handleRule(6,vec);
 };
 Formals : /*epsilon*/ 													{
     $$=handler.handleRule(7,vector<Basictype*>());
 };
-Formals : FormalsList 												    {handler.handleRule(8,vector<Basictype*>());};
+Formals : FormalsList 												    {
+    vector<Basictype*> vec{$1};
+    $$=handler.handleRule(8,vec);
+};
 FormalsList : FormalDecl 												{
     vector<Basictype*> vec{$1};
     $$=handler.handleRule(9,vec);
@@ -66,7 +69,7 @@ FormalsList : FormalDecl COMMA FormalsList 								{
 };
 FormalDecl : Type ID 													{
     vector<Basictype*> vec{$1,$2};
-    handler.handleRule(11,vec);
+    $$ = handler.handleRule(11,vec);
 };
 Statements : Statement 													{handler.handleRule(12,vector<Basictype*>());};
 Statements : Statements Statement 										{handler.handleRule(13,vector<Basictype*>());};
