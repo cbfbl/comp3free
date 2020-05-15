@@ -69,6 +69,11 @@ class Function : public Container {
   void setFunctionType(string set_func_type);
 };
 
+class String : public Basictype {
+ public:
+  String(char* yytext);
+};
+
 #define YYSTYPE Basictype*
 
 #endif

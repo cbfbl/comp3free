@@ -32,6 +32,7 @@ class Handler {
   Basictype* handleFormalDeclFormalList(Basictype* formal_decl,
                                         Basictype* formal_list);
   Basictype* handleFormalsEpsilon();
+  Basictype* handleFormalsFormalList(Basictype* formals);
   Basictype* handleRettypeType(Basictype* type);
   Basictype* handleRettypeVoid(Basictype* type_void);
   void finalize();

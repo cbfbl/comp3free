@@ -54,3 +54,5 @@ string Function::getFunctionType() { return function_type; }
 void Function::setFunctionType(string set_func_type) {
   function_type = set_func_type;
 }
+
+String::String(char* yytext) : Basictype(yytext) { this->setType("STRING"); }

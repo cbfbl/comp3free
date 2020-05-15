@@ -26,6 +26,9 @@ Basictype* Handler::handleRule(int rule_number, vector<Basictype*> params) {
     case 7:
       return handleFormalsEpsilon();
       break;
+    case 8:
+      return handleFormalsFormalList(params[0]);
+      break;
     case 9:
       return handleFormalDecl(params[0]);
       break;
@@ -74,32 +77,10 @@ void Handler::insertScope() {
   offset_stack.duplicateLastItem();
 }
 
+// rule 1
 void Handler::finalize() { removeScope(); }
 
-Basictype* Handler::handleRettypeType(Basictype* type) { return type; }
-Basictype* Handler::handleRettypeVoid(Basictype* void_type) {
-  return void_type;
-}
-
-void Handler::handleStatmentTypeId(Basictype* type, Basictype* id) {
-  if (symbol_table.exists(id->getLexeme())) {
-    return;
-  }
-  id->setGlobalOffset(offset_stack.getTopOffset());
-  id->setLocalOffset(symbol_table.getLastScopeSize());
-  id->setType(type->getType());
-  symbol_table.insertItem(id);
-  offset_stack.increaseOffset();
-}
-
-void Handler::handleStatmentTypeIdAssignExp(Basictype* type, Basictype* id,
-                                            Basictype* exp) {
-  if (type->getType() != exp->getType()) {
-    return;
-  }
-  handleStatmentTypeId(type, id);
-}
-
+// rule 4
 void Handler::handleFunctionDeclartion(Basictype* ret_type, Basictype* id,
                                        Basictype* args) {
   if (symbol_table.exists(((Id*)id)->getName())) {
@@ -114,6 +95,7 @@ void Handler::handleFunctionDeclartion(Basictype* ret_type, Basictype* id,
   func->setGlobalOffset(0);
   int i = -1;
   for (Basictype* basic_type : ((Container*)args)->getVariables()) {
+    cout << i << endl;
     basic_type->setGlobalOffset(i);
     func->addVariable(basic_type);
     i--;
@@ -121,25 +103,64 @@ void Handler::handleFunctionDeclartion(Basictype* ret_type, Basictype* id,
   symbol_table.insertItem(func);
 }
 
-Basictype* Handler::handleFormalDeclTypeId(Basictype* type, Basictype* id) {
-  if (symbol_table.exists(((Id*)id)->getName())) {
-    cout << "error" << endl;
-    exit(0);
-  }
-  id->setType(type->getType());
-  symbol_table.insertItem(id);
-  return id;
+// rule 5
+Basictype* Handler::handleRettypeType(Basictype* type) { return type; }
+
+// rule 6
+Basictype* Handler::handleRettypeVoid(Basictype* void_type) {
+  return void_type;
 }
 
+// rule 7
+Basictype* Handler::handleFormalsEpsilon() { return new Container("epsilon"); }
+
+// rule 8
+Basictype* Handler::handleFormalsFormalList(Basictype* formals) {
+  return formals;
+}
+
+// rule 9
 Basictype* Handler::handleFormalDecl(Basictype* formal_decl) {
-  Container* con = new Container(formal_decl->getLexeme().c_str());
-  return con;
+  return formal_decl;
 }
 
+// rule 10
 Basictype* Handler::handleFormalDeclFormalList(Basictype* formal_decl,
                                                Basictype* formal_list) {
   ((Container*)formal_list)->addVariable(formal_decl);
   return formal_list;
 }
 
-Basictype* Handler::handleFormalsEpsilon() { return new Container("epsilon"); }
+// rule 11
+Basictype* Handler::handleFormalDeclTypeId(Basictype* type, Basictype* id) {
+  if (symbol_table.exists(((Id*)id)->getName())) {
+    cout << "error" << endl;
+    exit(0);
+  }
+  Container* con = new Container(id->getLexeme().c_str());
+  con->addVariable(con);
+  con->setType(type->getType());
+  symbol_table.insertItem(con);
+  return con;
+}
+
+// rule 15
+void Handler::handleStatmentTypeId(Basictype* type, Basictype* id) {
+  if (symbol_table.exists(id->getLexeme())) {
+    return;
+  }
+  id->setGlobalOffset(offset_stack.getTopOffset());
+  id->setLocalOffset(symbol_table.getLastScopeSize());
+  id->setType(type->getType());
+  symbol_table.insertItem(id);
+  offset_stack.increaseOffset();
+}
+
+// rule 16
+void Handler::handleStatmentTypeIdAssignExp(Basictype* type, Basictype* id,
+                                            Basictype* exp) {
+  if (type->getType() != exp->getType()) {
+    return;
+  }
+  handleStatmentTypeId(type, id);
+}
