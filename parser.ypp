@@ -45,7 +45,6 @@ FuncDecl : RetType ID LPAREN {
     handler.setExpectedRetType($1->getType());
 } Formals RPAREN LBRACE Statements RBRACE 	{
     vector<Basictype*> vec{$1,$2,$5};
-    handler.removeScope();
     handler.handleRule(4,vec);
 };
 RetType : Type															{
@@ -77,7 +76,11 @@ FormalDecl : Type ID 													{
 };
 Statements : Statement 													{handler.handleRule(12,vector<Basictype*>());};
 Statements : Statements Statement 										{handler.handleRule(13,vector<Basictype*>());};
-Statement : LBRACE Statements RBRACE 									{handler.handleRule(14,vector<Basictype*>());};
+Statement : LBRACE {
+    handler.insertScope();
+} Statements RBRACE 			{
+    handler.handleRule(14,vector<Basictype*>());
+};
 Statement : Type ID SC 													{
     vector<Basictype*> vec{$1,$2};
     handler.handleRule(15,vec);

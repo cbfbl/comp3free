@@ -29,6 +29,9 @@ Basictype* Handler::handleRule(int rule_number, vector<Basictype*> params) {
     case 11:
       return handleFormalDeclTypeId(params[0], params[1]);
       break;
+    case 14:
+      removeScope();
+      break;
     case 15:
       handleStatmentTypeId(params[0], params[1]);
       break;
@@ -137,6 +140,7 @@ void Handler::handleFunctionDeclartion(Basictype* ret_type, Basictype* id,
   string func_type =
       output::makeFunctionType(ret_type->getType(), params_types);
   func->setFunctionType(func_type);
+  removeScope();
   symbol_table.insertItem(func);
 }
 
