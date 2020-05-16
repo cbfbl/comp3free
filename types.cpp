@@ -44,8 +44,10 @@ Container::Container(const char* yytext) : Basictype(yytext) {}
 vector<Basictype*> Container::getVariables() { return variables_list; }
 void Container::addVariable(Basictype* var) { variables_list.push_back(var); }
 
-Function::Function(const char* yytext) : Container(yytext) {}
-Function::Function(string yytext) : Container(yytext.c_str()) {}
+Function::Function(const char* yytext) : Container(yytext) { setType("FUNC"); }
+Function::Function(string yytext) : Container(yytext.c_str()) {
+  setType("FUNC");
+}
 void Function::setRetType(string set_ret_type) { ret_type = set_ret_type; }
 string Function::getFunctionType() { return function_type; }
 void Function::setFunctionType(string set_func_type) {

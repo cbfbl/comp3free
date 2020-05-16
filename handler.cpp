@@ -86,6 +86,16 @@ Handler::Handler() : expected_ret_type("VOID") {}
 void Handler::initialize() {
   offset_stack.initialize();
   symbol_table.insertScope();
+  Function* print = new Function("print");
+  Function* printi = new Function("printi");
+  vector<string> print_params{"STRING"};
+  vector<string> printi_params{"INT"};
+  string print_type = output::makeFunctionType("VOID", print_params);
+  string printi_type = output::makeFunctionType("VOID", printi_params);
+  print->setFunctionType(print_type);
+  printi->setFunctionType(printi_type);
+  symbol_table.insertItem(print);
+  symbol_table.insertItem(printi);
 }
 
 void Handler::removeScope() {
