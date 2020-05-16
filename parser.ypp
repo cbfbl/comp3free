@@ -40,9 +40,10 @@ Funcs : /*epsilon*/ 													{
 Funcs : FuncDecl Funcs 													{
     handler.handleRule(3,vector<Basictype*>());
 };
-FuncDecl : RetType ID LPAREN {handler.insertScope();} Formals RPAREN LBRACE {
+FuncDecl : RetType ID LPAREN {
+    handler.insertScope();
     handler.setExpectedRetType($1->getType());
-} Statements RBRACE 	{
+} Formals RPAREN LBRACE Statements RBRACE 	{
     vector<Basictype*> vec{$1,$2,$5};
     handler.removeScope();
     handler.handleRule(4,vec);
@@ -97,10 +98,10 @@ Statement : RETURN Exp SC												{
     vector<Basictype*> vec{$2};
     handler.handleRule(20,vec);
 };
-Statement : IF LPAREN Exp RPAREN Statement %prec THEN					{handler.handleRule(21,vector<Basictype*>());};
-Statement : IF LPAREN Exp RPAREN Statement ELSE Statement				{handler.handleRule(22,vector<Basictype*>());};
-Statement : WHILE LPAREN Exp RPAREN Statement %prec THEN				{handler.handleRule(23,vector<Basictype*>());};
-Statement : WHILE LPAREN Exp RPAREN Statement ELSE Statement			{handler.handleRule(24,vector<Basictype*>());};
+Statement : IFSTART %prec THEN					{handler.handleRule(21,vector<Basictype*>());};
+Statement : IFSTART ELSE Statement				{handler.handleRule(22,vector<Basictype*>());};
+Statement : WHILESTART %prec THEN				{handler.handleRule(23,vector<Basictype*>());};
+Statement : WHILESTART ELSE Statement			{handler.handleRule(24,vector<Basictype*>());};
 Statement : BREAK SC 													{handler.handleRule(25,vector<Basictype*>());};
 Statement : CONTINUE SC 												{handler.handleRule(26,vector<Basictype*>());};
 Call : ID LPAREN ExpList RPAREN											{handler.handleRule(27,vector<Basictype*>());};
@@ -146,7 +147,8 @@ Exp : Exp RELEQ Exp														{
     vector<Basictype*> vec{$1,$3};
     $$=handler.handleRule(48,vec);
 };
-
+IFSTART : IF LPAREN Exp {handler.insertScope();} RPAREN Statement {handler.removeScope();}
+WHILESTART : WHILE LPAREN Exp {handler.insertScope();} RPAREN Statement {handler.removeScope();}
 %%
 
 int main()
