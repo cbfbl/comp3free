@@ -115,8 +115,14 @@ Exp : Exp BINOPH Exp 													{handler.handleRule(35,vector<Basictype*>());}
 Exp : Exp BINOPL Exp													{handler.handleRule(36,vector<Basictype*>());};
 Exp : ID																{handler.handleRule(37,vector<Basictype*>());};
 Exp : Call																{handler.handleRule(38,vector<Basictype*>());};
-Exp : NUM																{handler.handleRule(39,vector<Basictype*>());};
-Exp : NUM B																{handler.handleRule(40,vector<Basictype*>());};
+Exp : NUM																{
+    vector<Basictype*> vec{$1};
+    handler.handleRule(39,vec);
+};
+Exp : NUM B																{
+    vector<Basictype*> vec{$1};
+    handler.handleRule(40,vec);
+};
 Exp : STRING															{handler.handleRule(41,vector<Basictype*>());};
 Exp : TRUE																{handler.handleRule(42,vector<Basictype*>());};
 Exp : FALSE															    {handler.handleRule(43,vector<Basictype*>());};

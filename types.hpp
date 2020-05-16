@@ -31,7 +31,7 @@ class Num : public Basictype {
   int lexeme_value;
 
  public:
-  Num(char* yytext);
+  Num(const char* yytext);
 };
 
 class Id : public Basictype {
@@ -73,7 +73,7 @@ class Function : public Container {
 
 class String : public Basictype {
  public:
-  String(char* yytext);
+  String(const char* yytext);
 };
 
 #define YYSTYPE Basictype*

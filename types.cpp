@@ -23,7 +23,7 @@ void Basictype::setLocalOffset(int local_set) { local_offset = local_set; }
 string& Basictype::getType() { return type; }
 void Basictype::setType(string type_set) { type = type_set; }
 
-Num::Num(char* yytext)
+Num::Num(const char* yytext)
     : Basictype(yytext), lexeme_value(std::stoi(string(yytext))) {
   this->setType("INT OR BYTE");
 }
@@ -52,4 +52,6 @@ void Function::setFunctionType(string set_func_type) {
   function_type = set_func_type;
 }
 
-String::String(char* yytext) : Basictype(yytext) { this->setType("STRING"); }
+String::String(const char* yytext) : Basictype(yytext) {
+  this->setType("STRING");
+}

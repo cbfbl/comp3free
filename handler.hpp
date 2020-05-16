@@ -39,6 +39,8 @@ class Handler {
   Basictype* handleExpOrExp(Basictype* exp_left, Basictype* exp_right);
   Basictype* handleExpAndExp(Basictype* exp_left, Basictype* exp_right);
   Basictype* handleNotExp(Basictype* exp);
+  Basictype* handleNumB(Basictype* num);
+  Basictype* handleNum(Basictype* num);
   void handleReturnWithType(Basictype* ret_type);
   void handleReturnVoid();
   void finalize();

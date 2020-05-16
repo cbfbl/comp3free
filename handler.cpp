@@ -53,6 +53,12 @@ Basictype* Handler::handleRule(int rule_number, vector<Basictype*> params) {
     case 20:
       handleReturnWithType(params[0]);
       break;
+    case 39:
+      return handleNum(params[0]);
+      break;
+    case 40:
+      return handleNumB(params[0]);
+      break;
     case 44:
       return handleNotExp(params[0]);
       break;
@@ -225,12 +231,24 @@ void Handler::handleReturnWithType(Basictype* ret_type) {
   setExpectedRetType("VOID");
 }
 
+// rule 39
+Basictype* Handler::handleNum(Basictype* num) {
+  num->setType("INT");
+  return num;
+}
+
+// rule 40
+Basictype* Handler::handleNumB(Basictype* num) {
+  num->setType("BYTE");
+  return num;
+}
+
 // rule 44
 Basictype* Handler::handleNotExp(Basictype* exp) {
   if (exp->getType() != "BOOL") {
     return new Basictype("ERROR");
   }
-  return new Bool("TRUE");
+  return new Bool("true");
 }
 
 // rule 45
@@ -238,7 +256,7 @@ Basictype* Handler::handleExpAndExp(Basictype* exp_left, Basictype* exp_right) {
   if (exp_left->getType() != "BOOL" || exp_right->getType() != "BOOL") {
     return new Basictype("ERROR");
   }
-  return new Bool("TRUE");
+  return new Bool("true");
 }
 
 // rule 46
@@ -246,7 +264,7 @@ Basictype* Handler::handleExpOrExp(Basictype* exp_left, Basictype* exp_right) {
   if (exp_left->getType() != "BOOL" || exp_right->getType() != "BOOL") {
     return new Basictype("ERROR");
   }
-  return new Bool("TRUE");
+  return new Bool("true");
 }
 
 // rule 47
@@ -255,7 +273,7 @@ Basictype* Handler::handleExpRelopExp(Basictype* exp_left,
   if (exp_left->getType() != exp_right->getType()) {
     return new Basictype("ERROR");
   }
-  return new Bool("TRUE");
+  return new Bool("true");
 }
 
 // rule 48
@@ -264,5 +282,5 @@ Basictype* Handler::handleExpReleqExp(Basictype* exp_left,
   if (exp_left->getType() != exp_right->getType()) {
     return new Basictype("ERROR");
   }
-  return new Bool("TRUE");
+  return new Bool("true");
 }
