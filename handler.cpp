@@ -1,15 +1,6 @@
 #include "handler.hpp"
 
 Basictype* Handler::handleRule(int rule_number, vector<Basictype*> params) {
-  int x = 0;
-  cout << "Rule number " << rule_number << " was called" << endl;
-  if (params.size() > 0) {
-    cout << "Params passed : ";
-  }
-  for (Basictype* param : params) {
-    cout << param->getLexeme() + ", ";
-  }
-  cout << endl;
   switch (rule_number) {
     case 1:
       finalize();
@@ -132,7 +123,6 @@ void Handler::handleFunctionDeclartion(Basictype* ret_type, Basictype* id,
   func->setGlobalOffset(0);
   int i = -1;
   for (Basictype* basic_type : ((Container*)args)->getVariables()) {
-    cout << i << endl;
     basic_type->setGlobalOffset(i);
     func->addVariable(basic_type);
     i--;
@@ -142,7 +132,6 @@ void Handler::handleFunctionDeclartion(Basictype* ret_type, Basictype* id,
       output::makeFunctionType(ret_type->getType(), params_types);
   func->setFunctionType(func_type);
   symbol_table.insertItem(func);
-  removeScope();
 }
 
 // rule 5

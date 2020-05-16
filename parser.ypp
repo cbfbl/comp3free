@@ -40,11 +40,11 @@ Funcs : /*epsilon*/ 													{
 Funcs : FuncDecl Funcs 													{
     handler.handleRule(3,vector<Basictype*>());
 };
-FuncDecl : RetType ID LPAREN Formals RPAREN LBRACE {
+FuncDecl : RetType ID LPAREN {handler.insertScope();} Formals RPAREN LBRACE {
     handler.setExpectedRetType($1->getType());
-    handler.insertScope();
 } Statements RBRACE 	{
-    vector<Basictype*> vec{$1,$2,$4};
+    vector<Basictype*> vec{$1,$2,$5};
+    handler.removeScope();
     handler.handleRule(4,vec);
 };
 RetType : Type															{
