@@ -20,8 +20,6 @@ class Handler {
   OffsetStack offset_stack;
   string expected_ret_type;
 
-
-
   void handleStatmentTypeId(Basictype* type, Basictype* id);
   void handleStatmentTypeIdAssignExp(Basictype* type, Basictype* id,
                                      Basictype* exp);
@@ -37,6 +35,10 @@ class Handler {
   Basictype* handleRettypeVoid(Basictype* type_void);
   Basictype* handleIdAssignExp(Basictype* id, Basictype* exp);
   Basictype* handleExpRelopExp(Basictype* exp_left, Basictype* exp_right);
+  Basictype* handleExpReleqExp(Basictype* exp_left, Basictype* exp_right);
+  Basictype* handleExpOrExp(Basictype* exp_left, Basictype* exp_right);
+  Basictype* handleExpAndExp(Basictype* exp_left, Basictype* exp_right);
+  Basictype* handleNotExp(Basictype* exp);
   void handleReturnWithType(Basictype* ret_type);
   void handleReturnVoid();
   void finalize();

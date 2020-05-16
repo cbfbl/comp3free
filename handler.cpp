@@ -53,8 +53,20 @@ Basictype* Handler::handleRule(int rule_number, vector<Basictype*> params) {
     case 20:
       handleReturnWithType(params[0]);
       break;
+    case 44:
+      return handleNotExp(params[0]);
+      break;
+    case 45:
+      return handleExpAndExp(params[0], params[1]);
+      break;
+    case 46:
+      return handleExpOrExp(params[0], params[1]);
+      break;
     case 47:
       return handleExpRelopExp(params[0], params[1]);
+      break;
+    case 48:
+      return handleExpReleqExp(params[0], params[1]);
       break;
 
     default:
@@ -213,8 +225,41 @@ void Handler::handleReturnWithType(Basictype* ret_type) {
   setExpectedRetType("VOID");
 }
 
+// rule 44
+Basictype* Handler::handleNotExp(Basictype* exp) {
+  if (exp->getType() != "BOOL") {
+    return new Basictype("ERROR");
+  }
+  return new Bool("TRUE");
+}
+
+// rule 45
+Basictype* Handler::handleExpAndExp(Basictype* exp_left, Basictype* exp_right) {
+  if (exp_left->getType() != "BOOL" || exp_right->getType() != "BOOL") {
+    return new Basictype("ERROR");
+  }
+  return new Bool("TRUE");
+}
+
+// rule 46
+Basictype* Handler::handleExpOrExp(Basictype* exp_left, Basictype* exp_right) {
+  if (exp_left->getType() != "BOOL" || exp_right->getType() != "BOOL") {
+    return new Basictype("ERROR");
+  }
+  return new Bool("TRUE");
+}
+
 // rule 47
 Basictype* Handler::handleExpRelopExp(Basictype* exp_left,
+                                      Basictype* exp_right) {
+  if (exp_left->getType() != exp_right->getType()) {
+    return new Basictype("ERROR");
+  }
+  return new Bool("TRUE");
+}
+
+// rule 48
+Basictype* Handler::handleExpReleqExp(Basictype* exp_left,
                                       Basictype* exp_right) {
   if (exp_left->getType() != exp_right->getType()) {
     return new Basictype("ERROR");
