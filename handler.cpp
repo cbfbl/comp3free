@@ -65,6 +65,12 @@ Basictype* Handler::handleRule(int rule_number, vector<Basictype*> params) {
     case 48:
       return handleExpReleqExp(params[0], params[1]);
       break;
+    case 49:
+      return handleIfStart(params[0]);
+      break;
+    case 50:
+      return handleWhileStart(params[0]);
+      break;
 
     default:
       break;
@@ -272,4 +278,17 @@ Basictype* Handler::handleExpReleqExp(Basictype* exp_left,
     return new Basictype("ERROR");
   }
   return new Bool("true");
+}
+
+// rule 49
+Basictype* Handler::handleIfStart(Basictype* exp) {
+  if (exp->getType() != "BOOL") {
+    return new Basictype("ERROR");
+  }
+  return exp;
+}
+
+// rule 50
+Basictype* Handler::handleWhileStart(Basictype* exp) {
+  return handleIfStart(exp);
 }
