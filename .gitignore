@@ -8,4 +8,5 @@ parser.tab.hpp
 settings.json
 /.vscode
 /.idea
-
+/cmake-build*
+CMakeLists.txt
