@@ -101,14 +101,14 @@ Statement : RETURN Exp SC												{
     vector<Basictype*> vec{$2};
     handler.handleRule(20,vec);
 };
-Statement : IFSTART %prec THEN					{handler.handleRule(21,vector<Basictype*>());};
+Statement : IFSTART %prec THEN					                        {handler.handleRule(21,vector<Basictype*>());};
 Statement : IFSTART ELSE {
     handler.insertScope();
 } Statement			    {
     handler.removeScope();
     handler.handleRule(22,vector<Basictype*>());
 };
-Statement : WHILESTART %prec THEN				{handler.handleRule(23,vector<Basictype*>());};
+Statement : WHILESTART %prec THEN				                        {handler.handleRule(23,vector<Basictype*>());};
 Statement : WHILESTART ELSE {
     handler.insertScope();
 } Statement			{
@@ -123,7 +123,7 @@ Call : ID LPAREN ExpList RPAREN											{
 };
 Call : ID LPAREN RPAREN													{
     vector<Basictype*> vec{$1};
-    handler.handleRule(28,vec);
+    $$=handler.handleRule(28,vec);
 };
 ExpList : Exp															{
     vector<Basictype*> vec{$1};
