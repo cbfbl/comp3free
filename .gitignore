@@ -7,3 +7,5 @@ parser.tab.hpp
 /tests
 settings.json
 /.vscode
+/.idea
+
