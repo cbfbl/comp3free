@@ -125,17 +125,23 @@ Type : INT																{handler.handleRule(31,vector<Basictype*>());};
 Type : BYTE																{handler.handleRule(32,vector<Basictype*>());};
 Type : BOOL															    {handler.handleRule(33,vector<Basictype*>());};
 Exp : LPAREN Exp RPAREN													{handler.handleRule(34,vector<Basictype*>());};
-Exp : Exp BINOPH Exp 													{handler.handleRule(35,vector<Basictype*>());};
-Exp : Exp BINOPL Exp													{handler.handleRule(36,vector<Basictype*>());};
+Exp : Exp BINOPH Exp 													{
+    vector<Basictype*> vec{$1,$3};
+    handler.handleRule(35,vector<Basictype*>());
+};
+Exp : Exp BINOPL Exp													{
+    vector<Basictype*> vec{$1,$3};
+    handler.handleRule(36,vector<Basictype*>());
+};
 Exp : ID																{handler.handleRule(37,vector<Basictype*>());};
 Exp : Call																{handler.handleRule(38,vector<Basictype*>());};
 Exp : NUM																{
     vector<Basictype*> vec{$1};
-    handler.handleRule(39,vec);
+    $$=handler.handleRule(39,vec);
 };
 Exp : NUM B																{
     vector<Basictype*> vec{$1};
-    handler.handleRule(40,vec);
+    $$=handler.handleRule(40,vec);
 };
 Exp : STRING															{handler.handleRule(41,vector<Basictype*>());};
 Exp : TRUE																{handler.handleRule(42,vector<Basictype*>());};

@@ -43,6 +43,8 @@ class Handler {
   Basictype* handleNum(Basictype* num);
   Basictype* handleIfStart(Basictype* exp);
   Basictype* handleWhileStart(Basictype* exp);
+  Basictype* handleExpBinopH(Basictype* exp_left, Basictype* exp_right);
+  Basictype* handleExpBinopL(Basictype* exp_left, Basictype* exp_right);
   void handleReturnWithType(Basictype* ret_type);
   void handleReturnVoid();
   void finalize();

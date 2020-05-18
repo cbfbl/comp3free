@@ -47,6 +47,12 @@ Basictype* Handler::handleRule(int rule_number, vector<Basictype*> params) {
     case 20:
       handleReturnWithType(params[0]);
       break;
+    case 35:
+      return handleExpBinopH(params[0], params[1]);
+      break;
+    case 36:
+      return handleExpBinopL(params[0], params[1]);
+      break;
     case 39:
       return handleNum(params[0]);
       break;
@@ -238,6 +244,19 @@ void Handler::handleReturnWithType(Basictype* ret_type) {
     return;
   }
   setExpectedRetType("VOID");
+}
+
+// rule 35
+Basictype* Handler::handleExpBinopH(Basictype* exp_left, Basictype* exp_right) {
+  if (exp_left->getType() != exp_right->getType()) {
+    return new Basictype("ERROR");
+  }
+  return exp_left;
+}
+
+// rule 36
+Basictype* Handler::handleExpBinopL(Basictype* exp_left, Basictype* exp_right) {
+  return handleExpBinopH(exp_left, exp_right);
 }
 
 // rule 39
