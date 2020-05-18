@@ -50,6 +50,9 @@ Basictype* Handler::handleRule(int rule_number, vector<Basictype*> params) {
     case 27:
       return handleCallWithParams(params[0], params[1]);
       break;
+    case 28:
+      return handleCallNoParams(params[0]);
+      break;
     case 29:
       return handleExplistExp(params[0]);
       break;
@@ -272,6 +275,20 @@ Basictype* Handler::handleCallWithParams(Basictype* id, Basictype* exp_list) {
     if (func_args[i]->getType() != exp_list_params[i]->getType()) {
       return new Basictype("ERROR");
     }
+  }
+  return func;
+}
+
+// rule 28
+Basictype* Handler::handleCallNoParams(Basictype* id) {
+  Basictype* func = symbol_table.getItemById(id->getLexeme());
+  if (func->getType() != "FUNC") {
+    cout << func->getType() << endl;
+    return new Basictype("ERROR");
+  }
+  vector<Basictype*> func_args = ((Function*)func)->getVariables();
+  if (func_args.size() != 0) {
+    return new Basictype("ERROR");
   }
   return func;
 }

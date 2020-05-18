@@ -121,7 +121,10 @@ Call : ID LPAREN ExpList RPAREN											{
     vector<Basictype*> vec{$1,$3};
     $$=handler.handleRule(27,vec);
 };
-Call : ID LPAREN RPAREN													{handler.handleRule(28,vector<Basictype*>());};
+Call : ID LPAREN RPAREN													{
+    vector<Basictype*> vec{$1};
+    handler.handleRule(28,vec);
+};
 ExpList : Exp															{
     vector<Basictype*> vec{$1};
     $$=handler.handleRule(29,vec);
