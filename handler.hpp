@@ -16,50 +16,83 @@ using std::string;
 using std::vector;
 
 class Handler {
-  SymbolTable symbol_table;
-  OffsetStack offset_stack;
-  string expected_ret_type;
+    SymbolTable symbol_table;
+    OffsetStack offset_stack;
+    string expected_ret_type;
 
-  void handleStatmentTypeId(Basictype* type, Basictype* id);
-  void handleStatmentTypeIdAssignExp(Basictype* type, Basictype* id,
-                                     Basictype* exp);
-  void handleFunctionDeclartion(Basictype* ret_type, Basictype* id,
-                                Basictype* args);
-  Basictype* handleFormalDeclTypeId(Basictype* type, Basictype* id);
-  Basictype* handleFormalDecl(Basictype* formal_decl);
-  Basictype* handleFormalDeclFormalList(Basictype* formal_decl,
-                                        Basictype* formal_list);
-  Basictype* handleFormalsEpsilon();
-  Basictype* handleFormalsFormalList(Basictype* formals);
-  Basictype* handleRettypeType(Basictype* type);
-  Basictype* handleRettypeVoid(Basictype* type_void);
-  Basictype* handleIdAssignExp(Basictype* id, Basictype* exp);
-  Basictype* handleExpRelopExp(Basictype* exp_left, Basictype* exp_right);
-  Basictype* handleExpReleqExp(Basictype* exp_left, Basictype* exp_right);
-  Basictype* handleExpOrExp(Basictype* exp_left, Basictype* exp_right);
-  Basictype* handleExpAndExp(Basictype* exp_left, Basictype* exp_right);
-  Basictype* handleNotExp(Basictype* exp);
-  Basictype* handleNumB(Basictype* num);
-  Basictype* handleNum(Basictype* num);
-  Basictype* handleIfStart(Basictype* exp);
-  Basictype* handleWhileStart(Basictype* exp);
-  Basictype* handleCallWithParams(Basictype* id, Basictype* exp_list);
-  Basictype* handleCallNoParams(Basictype* id);
-  Basictype* handleExplistExp(Basictype* exp);
-  Basictype* handleExpExplist(Basictype* exp, Basictype* exp_list);
-  Basictype* handleExpBinopH(Basictype* exp_left, Basictype* exp_right);
-  Basictype* handleExpBinopL(Basictype* exp_left, Basictype* exp_right);
-  void handleReturnWithType(Basictype* ret_type);
-  void handleReturnVoid();
-  void finalize();
+    void handleStatmentTypeId(Basictype *type, Basictype *id);
 
- public:
-  Handler();
-  Basictype* handleRule(int rule_number, vector<Basictype*> params);
-  void initialize();
-  void setExpectedRetType(string ret_type);
-  void insertScope();
-  void removeScope();
+    void handleStatmentTypeIdAssignExp(Basictype *type, Basictype *id,
+                                       Basictype *exp);
+
+    void handleFunctionDeclartion(Basictype *ret_type, Basictype *id,
+                                  Basictype *args);
+
+    Basictype *handleFormalDeclTypeId(Basictype *type, Basictype *id);
+
+    Basictype *handleFormalDecl(Basictype *formal_decl);
+
+    Basictype *handleFormalDeclFormalList(Basictype *formal_decl,
+                                          Basictype *formal_list);
+
+    Basictype *handleFormalsEpsilon();
+
+    Basictype *handleFormalsFormalList(Basictype *formals);
+
+    Basictype *handleRettypeType(Basictype *type);
+
+    Basictype *handleRettypeVoid(Basictype *type_void);
+
+    Basictype *handleIdAssignExp(Basictype *id, Basictype *exp);
+
+    Basictype *handleExpRelopExp(Basictype *exp_left, Basictype *exp_right);
+
+    Basictype *handleExpReleqExp(Basictype *exp_left, Basictype *exp_right);
+
+    Basictype *handleExpOrExp(Basictype *exp_left, Basictype *exp_right);
+
+    Basictype *handleExpAndExp(Basictype *exp_left, Basictype *exp_right);
+
+    Basictype *handleNotExp(Basictype *exp);
+
+    Basictype *handleNumB(Basictype *num);
+
+    Basictype *handleNum(Basictype *num);
+
+    Basictype *handleIfStart(Basictype *exp);
+
+    Basictype *handleWhileStart(Basictype *exp);
+
+    Basictype *handleCallWithParams(Basictype *id, Basictype *exp_list);
+
+    Basictype *handleCallNoParams(Basictype *id);
+
+    Basictype *handleExplistExp(Basictype *exp);
+
+    Basictype *handleExpExplist(Basictype *exp, Basictype *exp_list);
+
+    Basictype *handleExpBinopH(Basictype *exp_left, Basictype *exp_right);
+
+    Basictype *handleExpBinopL(Basictype *exp_left, Basictype *exp_right);
+
+    void handleReturnWithType(Basictype *ret_type);
+
+    void handleReturnVoid();
+
+    void finalize();
+
+public:
+    Handler();
+
+    Basictype *handleRule(int rule_number, vector<Basictype *> params);
+
+    void initialize();
+
+    void setExpectedRetType(string ret_type);
+
+    void insertScope();
+
+    void removeScope();
 };
 
 #endif

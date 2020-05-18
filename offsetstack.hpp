@@ -6,15 +6,20 @@
 using std::vector;
 
 class OffsetStack {
-  vector<int> stack;
+    vector<int> stack;
 
- public:
-  void duplicateLastItem();
-  void removeLastItem();
-  void increaseOffset();
-  void decreaseOffset();
-  int getTopOffset();
-  void initialize();
+public:
+    void duplicateLastItem();
+
+    void removeLastItem();
+
+    void increaseOffset();
+
+    void decreaseOffset();
+
+    int getTopOffset();
+
+    void initialize();
 };
 
 #endif
