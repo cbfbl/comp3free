@@ -12,7 +12,7 @@ void SymbolTable::removeScope() {
 }
 
 void SymbolTable::insertItem(Basictype* item, bool insert_to_scope) {
-  vector<unsigned long> location_vec{scopes.size(), scopes.back().size()};
+  vector<unsigned long> location_vec{scopes.size() - 1, scopes.back().size()};
   id_map.insert({item->getLexeme(), location_vec});
   if (insert_to_scope) {
     scopes.back().push_back(item);
@@ -30,7 +30,8 @@ Basictype* SymbolTable::getItemById(string id) {
     return new Basictype("ERROR");
   }
   auto& location_vec = id_map[id];
-  return scopes[location_vec[0]][location_vec[1]];
+  Basictype* returned_object = scopes[location_vec[0]][location_vec[1]];
+  return returned_object;
 }
 
 int SymbolTable::getLastScopeSize() { return scopes.back().size(); }

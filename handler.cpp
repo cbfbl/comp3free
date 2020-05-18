@@ -47,6 +47,9 @@ Basictype* Handler::handleRule(int rule_number, vector<Basictype*> params) {
     case 20:
       handleReturnWithType(params[0]);
       break;
+    case 27:
+      return handleCallWithParams(params[0], params[1]);
+      break;
     case 29:
       return handleExplistExp(params[0]);
       break;
@@ -197,7 +200,7 @@ Basictype* Handler::handleFormalDeclFormalList(Basictype* formal_decl,
 // rule 11
 Basictype* Handler::handleFormalDeclTypeId(Basictype* type, Basictype* id) {
   if (symbol_table.exists(((Id*)id)->getName())) {
-    cout << "error" << endl;
+    cout << "error" << endl;  // TODO change entire if probably
     exit(0);
   }
   Container* con = new Container(id->getLexeme().c_str());
@@ -250,6 +253,27 @@ void Handler::handleReturnWithType(Basictype* ret_type) {
     return;
   }
   setExpectedRetType("VOID");
+}
+
+// rule 27
+Basictype* Handler::handleCallWithParams(Basictype* id, Basictype* exp_list) {
+  Basictype* func = symbol_table.getItemById(id->getLexeme());
+  if (func->getType() != "FUNC") {
+    cout << func->getType() << endl;
+    return new Basictype("ERROR");
+  }
+
+  vector<Basictype*> func_args = ((Function*)func)->getVariables();
+  vector<Basictype*> exp_list_params = ((Container*)exp_list)->getVariables();
+  if (func_args.size() != exp_list_params.size()) {
+    return new Basictype("ERROR");
+  }
+  for (int i = 0; i < func_args.size(); i++) {
+    if (func_args[i]->getType() != exp_list_params[i]->getType()) {
+      return new Basictype("ERROR");
+    }
+  }
+  return func;
 }
 
 // rule 29

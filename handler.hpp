@@ -43,6 +43,7 @@ class Handler {
   Basictype* handleNum(Basictype* num);
   Basictype* handleIfStart(Basictype* exp);
   Basictype* handleWhileStart(Basictype* exp);
+  Basictype* handleCallWithParams(Basictype* id, Basictype* exp_list);
   Basictype* handleExplistExp(Basictype* exp);
   Basictype* handleExpExplist(Basictype* exp, Basictype* exp_list);
   Basictype* handleExpBinopH(Basictype* exp_left, Basictype* exp_right);
