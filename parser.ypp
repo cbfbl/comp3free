@@ -119,19 +119,25 @@ Statement : BREAK SC 													{handler.handleRule(25,vector<Basictype*>());}
 Statement : CONTINUE SC 												{handler.handleRule(26,vector<Basictype*>());};
 Call : ID LPAREN ExpList RPAREN											{handler.handleRule(27,vector<Basictype*>());};
 Call : ID LPAREN RPAREN													{handler.handleRule(28,vector<Basictype*>());};
-ExpList : Exp															{handler.handleRule(29,vector<Basictype*>());};
-ExpList : Exp COMMA ExpList												{handler.handleRule(30,vector<Basictype*>());};
+ExpList : Exp															{
+    vector<Basictype*> vec{$1};
+    $$=handler.handleRule(29,vec);
+};
+ExpList : Exp COMMA ExpList												{
+    vector<Basictype*> vec{$1,$3};
+    $$=handler.handleRule(30,vec);
+};
 Type : INT																{handler.handleRule(31,vector<Basictype*>());};
 Type : BYTE																{handler.handleRule(32,vector<Basictype*>());};
 Type : BOOL															    {handler.handleRule(33,vector<Basictype*>());};
 Exp : LPAREN Exp RPAREN													{handler.handleRule(34,vector<Basictype*>());};
 Exp : Exp BINOPH Exp 													{
     vector<Basictype*> vec{$1,$3};
-    handler.handleRule(35,vector<Basictype*>());
+    $$=handler.handleRule(35,vec);
 };
 Exp : Exp BINOPL Exp													{
     vector<Basictype*> vec{$1,$3};
-    handler.handleRule(36,vector<Basictype*>());
+    $$=handler.handleRule(36,vec);
 };
 Exp : ID																{handler.handleRule(37,vector<Basictype*>());};
 Exp : Call																{handler.handleRule(38,vector<Basictype*>());};

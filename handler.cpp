@@ -47,6 +47,12 @@ Basictype* Handler::handleRule(int rule_number, vector<Basictype*> params) {
     case 20:
       handleReturnWithType(params[0]);
       break;
+    case 29:
+      return handleExplistExp(params[0]);
+      break;
+    case 30:
+      return handleExpExplist(params[0], params[1]);
+      break;
     case 35:
       return handleExpBinopH(params[0], params[1]);
       break;
@@ -244,6 +250,19 @@ void Handler::handleReturnWithType(Basictype* ret_type) {
     return;
   }
   setExpectedRetType("VOID");
+}
+
+// rule 29
+Basictype* Handler::handleExplistExp(Basictype* exp) {
+  Container* con = new Container(exp->getLexeme().c_str());
+  con->addVariable(exp);
+  return con;
+}
+
+// rule 30
+Basictype* Handler::handleExpExplist(Basictype* exp, Basictype* exp_list) {
+  ((Container*)exp_list)->addVariable(exp);
+  return exp_list;
 }
 
 // rule 35
