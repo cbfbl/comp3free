@@ -25,6 +25,14 @@ bool SymbolTable::exists(string id) {
   return false;
 }
 
+Basictype* SymbolTable::getItemById(string id) {
+  if (!exists(id)) {
+    return new Basictype("ERROR");
+  }
+  auto& location_vec = id_map[id];
+  return scopes[location_vec[0]][location_vec[1]];
+}
+
 int SymbolTable::getLastScopeSize() { return scopes.back().size(); }
 
 vector<Basictype*> SymbolTable::getLastScopeData() { return scopes.back(); }

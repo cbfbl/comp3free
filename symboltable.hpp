@@ -20,6 +20,7 @@ class SymbolTable {
   bool exists(string id);
   int getLastScopeSize();
   vector<Basictype*> getLastScopeData();
+  Basictype* getItemById(string id);
 };
 
 #endif
