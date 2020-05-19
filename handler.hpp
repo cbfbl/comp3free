@@ -71,6 +71,8 @@ class Handler {
 
     Basictype *handleExpExplist(Basictype *exp, Basictype *exp_list);
 
+    Basictype *handleBracketExpBracket(Basictype *exp);
+
     Basictype *handleExpBinopH(Basictype *exp_left, Basictype *exp_right);
 
     Basictype *handleExpBinopL(Basictype *exp_left, Basictype *exp_right);

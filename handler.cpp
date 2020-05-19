@@ -59,6 +59,9 @@ Basictype *Handler::handleRule(int rule_number, vector<Basictype *> params) {
         case 30:
             return handleExpExplist(params[0], params[1]);
             break;
+        case 34:
+            return handleBracketExpBracket(params[0]);
+            break;
         case 35:
             return handleExpBinopH(params[0], params[1]);
             break;
@@ -106,8 +109,8 @@ void Handler::initialize() {
     symbol_table.insertScope();
     Function *print = new Function("print");
     Function *printi = new Function("printi");
-    vector <string> print_params{"STRING"};
-    vector <string> printi_params{"INT"};
+    vector<string> print_params{"STRING"};
+    vector<string> printi_params{"INT"};
     string print_type = output::makeFunctionType("VOID", print_params);
     string printi_type = output::makeFunctionType("VOID", printi_params);
     print->setFunctionType(print_type);
@@ -118,7 +121,7 @@ void Handler::initialize() {
 
 void Handler::removeScope() {
     output::endScope();
-    vector < Basictype * > last_scope = symbol_table.getLastScopeData();
+    vector<Basictype *> last_scope = symbol_table.getLastScopeData();
     for (Basictype *basic_p : last_scope) {
         if (basic_p->getType() == "FUNC") {
             output::printID(basic_p->getLexeme(), basic_p->getGlobalOffset(),
@@ -153,7 +156,7 @@ void Handler::handleFunctionDeclartion(Basictype *ret_type, Basictype *id,
     if (expected_ret_type != "VOID") {
         return;
     }
-    vector <string> params_types;
+    vector<string> params_types;
     Function *func = new Function(((Id *) id)->getName());
     func->setType("FUNC");
     func->setRetType(ret_type->getType());
@@ -266,9 +269,9 @@ Basictype *Handler::handleCallWithParams(Basictype *id, Basictype *exp_list) {
         return new Basictype("ERROR");
     }
 
-    vector < Basictype * > func_args = ((Function *) func)->getVariables();
-    vector < Basictype * >
-    exp_list_params = ((Container *) exp_list)->getVariables();
+    vector<Basictype *> func_args = ((Function *) func)->getVariables();
+    vector<Basictype *>
+            exp_list_params = ((Container *) exp_list)->getVariables();
     if (func_args.size() != exp_list_params.size()) {
         return new Basictype("ERROR");
     }
@@ -287,8 +290,8 @@ Basictype *Handler::handleCallNoParams(Basictype *id) {
         cout << func->getType() << endl;
         return new Basictype("ERROR");
     }
-    vector < Basictype * > func_args = ((Function *) func)->getVariables();
-    if (func_args.size() != 0) {
+    vector<Basictype *> func_args = ((Function *) func)->getVariables();
+    if (!func_args.empty()) {
         return new Basictype("ERROR");
     }
     return func;
@@ -305,6 +308,11 @@ Basictype *Handler::handleExplistExp(Basictype *exp) {
 Basictype *Handler::handleExpExplist(Basictype *exp, Basictype *exp_list) {
     ((Container *) exp_list)->addVariable(exp);
     return exp_list;
+}
+
+// rule 34
+Basictype *Handler::handleBracketExpBracket(Basictype *exp) {
+    return exp;
 }
 
 // rule 35
