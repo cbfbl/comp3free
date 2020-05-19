@@ -83,6 +83,10 @@ class Handler {
 
     Basictype *handleExpBinopL(Basictype *exp_left, Basictype *exp_right);
 
+    Basictype *handleId(Basictype *id);
+
+    Basictype *handleCallToExp(Basictype *call);
+
     void handleReturnWithType(Basictype *ret_type);
 
     void handleReturnVoid();

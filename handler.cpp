@@ -70,6 +70,12 @@ Basictype *Handler::handleRule(int rule_number, vector<Basictype *> params) {
         case 36:
             return handleExpBinopL(params[0], params[1]);
             break;
+        case 37:
+            return handleId(params[0]);
+            break;
+        case 38:
+            return handleCallToExp(params[0]);
+            break;
         case 39:
             return handleNum(params[0]);
             break;
@@ -340,6 +346,23 @@ Basictype *Handler::handleExpBinopH(Basictype *exp_left, Basictype *exp_right) {
 // rule 36
 Basictype *Handler::handleExpBinopL(Basictype *exp_left, Basictype *exp_right) {
     return handleExpBinopH(exp_left, exp_right);
+}
+
+// rule 37
+Basictype *Handler::handleId(Basictype *id) {
+    Basictype *id_type = symbol_table.getItemById(id->getLexeme());
+    Basictype *ret_type = new Basictype(id_type->getLexeme().c_str());
+    if (id_type->getType() == "FUNC") {
+        ret_type->setType(((Function *) id_type)->getRetType());
+    } else {
+        ret_type->setType(id_type->getType());
+    }
+    return ret_type;
+}
+
+// rule 38
+Basictype *Handler::handleCallToExp(Basictype *call) {
+    return call;
 }
 
 // rule 39
