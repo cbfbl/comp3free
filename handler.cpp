@@ -222,8 +222,7 @@ Basictype *Handler::handleFormalDeclFormalList(Basictype *formal_decl,
 
 // rule 11
 Basictype *Handler::handleFormalDeclTypeId(Basictype *type, Basictype *id) {
-    if (symbol_table.exists(((Id *) id)->getName())) {
-        cout << "error" << endl;  // TODO change entire if probably
+    if (symbol_table.exists(id->getLexeme())) {
         exit(0);
     }
     Container *con = new Container(id->getLexeme().c_str());
@@ -248,7 +247,7 @@ void Handler::handleStatmentTypeId(Basictype *type, Basictype *id) {
 // rule 16
 void Handler::handleStatmentTypeIdAssignExp(Basictype *type, Basictype *id,
                                             Basictype *exp) {
-    if (type->getType() != exp->getType()) {
+    if (!assignmentIsLegal(type->getType(), exp->getType())) {
         return;
     }
     handleStatmentTypeId(type, id);
