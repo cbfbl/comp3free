@@ -68,6 +68,8 @@ void Function::setFunctionType(string set_func_type) {
     function_type = set_func_type;
 }
 
+string Function::getRetType() { return ret_type; }
+
 String::String(const char *yytext) : Basictype(yytext) {
     this->setType("STRING");
 }

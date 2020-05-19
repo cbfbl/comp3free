@@ -291,7 +291,9 @@ Basictype *Handler::handleCallWithParams(Basictype *id, Basictype *exp_list) {
             return new Basictype("ERROR");
         }
     }
-    return func;
+    Basictype *ret_call = new Basictype("CALL");
+    ret_call->setType(((Function *) func)->getRetType());
+    return ret_call;
 }
 
 // rule 28
@@ -304,7 +306,9 @@ Basictype *Handler::handleCallNoParams(Basictype *id) {
     if (!func_args.empty()) {
         return new Basictype("ERROR");
     }
-    return func;
+    Basictype *ret_call = new Basictype("CALL");
+    ret_call->setType(((Function *) func)->getRetType());
+    return ret_call;
 }
 
 // rule 29

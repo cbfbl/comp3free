@@ -86,6 +86,8 @@ public:
     string getFunctionType();
 
     void setFunctionType(string set_func_type);
+
+    string getRetType();
 };
 
 class String : public Basictype {
