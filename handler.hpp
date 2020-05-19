@@ -93,6 +93,7 @@ class Handler {
 
     void finalize();
 
+    bool isNum(const string &type);
 
 public:
     Handler();

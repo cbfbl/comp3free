@@ -345,10 +345,13 @@ Basictype *Handler::handleBracketExpBracket(Basictype *exp) {
 
 // rule 35
 Basictype *Handler::handleExpBinopH(Basictype *exp_left, Basictype *exp_right) {
-    if (exp_left->getType() != exp_right->getType()) {
+    if (isNum(exp_left->getType()) && isNum(exp_right->getType())) {
         return new Basictype("ERROR");
     }
-    return exp_left;
+    if (exp_left->getType() == "INT") {
+        return exp_left;
+    }
+    return exp_right;
 }
 
 // rule 36
@@ -427,7 +430,7 @@ Basictype *Handler::handleExpOrExp(Basictype *exp_left, Basictype *exp_right) {
 // rule 47
 Basictype *Handler::handleExpRelopExp(Basictype *exp_left,
                                       Basictype *exp_right) {
-    if (exp_left->getType() != exp_right->getType()) {
+    if (isNum(exp_left->getType()) && isNum(exp_right->getType())) {
         return new Basictype("ERROR");
     }
     return new Bool("true");
@@ -436,7 +439,7 @@ Basictype *Handler::handleExpRelopExp(Basictype *exp_left,
 // rule 48
 Basictype *Handler::handleExpReleqExp(Basictype *exp_left,
                                       Basictype *exp_right) {
-    if (exp_left->getType() != exp_right->getType()) {
+    if (isNum(exp_left->getType()) && isNum(exp_right->getType())) {
         return new Basictype("ERROR");
     }
     return new Bool("true");
@@ -453,4 +456,8 @@ Basictype *Handler::handleIfStart(Basictype *exp) {
 // rule 50
 Basictype *Handler::handleWhileStart(Basictype *exp) {
     return handleIfStart(exp);
+}
+
+bool Handler::isNum(const string &type) {
+    return (type == "INT" || type == "BYTE");
 }
