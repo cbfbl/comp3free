@@ -1,5 +1,7 @@
 #include "handler.hpp"
 
+#define THE_ANSWER 42
+
 Basictype *Handler::handleRule(int rule_number, vector<Basictype *> params) {
     switch (rule_number) {
         case 1:
@@ -73,6 +75,15 @@ Basictype *Handler::handleRule(int rule_number, vector<Basictype *> params) {
             break;
         case 40:
             return handleNumB(params[0]);
+            break;
+        case 41:
+            return handleString(params[0]);
+            break;
+        case THE_ANSWER:
+            return handleTrue(params[0]);
+            break;
+        case 43:
+            return handleFalse(params[0]);
             break;
         case 44:
             return handleNotExp(params[0]);
@@ -338,6 +349,21 @@ Basictype *Handler::handleNum(Basictype *num) {
 Basictype *Handler::handleNumB(Basictype *num) {
     num->setType("BYTE");
     return num;
+}
+
+// rule 41
+Basictype *Handler::handleString(Basictype *string) {
+    return string;
+}
+
+// rule THE_ANSWER
+Basictype *Handler::handleTrue(Basictype *bool_true) {
+    return bool_true;
+}
+
+// rule 43
+Basictype *Handler::handleFalse(Basictype *bool_false) {
+    return bool_false;
 }
 
 // rule 44

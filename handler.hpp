@@ -57,6 +57,12 @@ class Handler {
 
     Basictype *handleNumB(Basictype *num);
 
+    Basictype *handleString(Basictype *string);
+
+    Basictype *handleTrue(Basictype *bool_true);
+
+    Basictype *handleFalse(Basictype *bool_false);
+
     Basictype *handleNum(Basictype *num);
 
     Basictype *handleIfStart(Basictype *exp);

@@ -10,6 +10,7 @@ using std::endl;
 using std::string;
 using std::vector;
 
+
 class Basictype {
     string lexeme;
     int global_offset;
@@ -61,7 +62,7 @@ public:
 
 class Container : public Basictype {
     vector<Basictype *> variables_list;
-    vector <string> variables_types;
+    vector<string> variables_types;
 
 public:
     Container(const char *yytext);

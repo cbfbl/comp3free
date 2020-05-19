@@ -158,9 +158,18 @@ Exp : NUM B																{
     vector<Basictype*> vec{$1};
     $$=handler.handleRule(40,vec);
 };
-Exp : STRING															{handler.handleRule(41,vector<Basictype*>());};
-Exp : TRUE																{handler.handleRule(42,vector<Basictype*>());};
-Exp : FALSE															    {handler.handleRule(43,vector<Basictype*>());};
+Exp : STRING															{
+    vector<Basictype*> vec{$1};
+    $$=handler.handleRule(41,vec);
+};
+Exp : TRUE																{
+    vector<Basictype*> vec{$1};
+    handler.handleRule(42,vec);
+};
+Exp : FALSE															    {
+    vector<Basictype*> vec{$1};
+    handler.handleRule(43,vec);
+};
 Exp : NOT Exp															{
     vector<Basictype*> vec{$2};
     $$=handler.handleRule(44,vec);
