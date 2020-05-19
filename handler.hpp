@@ -20,6 +20,7 @@ class Handler {
     OffsetStack offset_stack;
     string expected_ret_type;
     int current_while_count;
+    bool was_main_defined;
 
     void handleStatmentTypeId(Basictype *type, Basictype *id);
 
@@ -110,6 +111,8 @@ class Handler {
     bool isNum(const string &type);
 
     bool assignmentIsLegal(const string &assign_to, const string &assign_from);
+
+    bool isMain(Basictype *ret_type, Basictype *id, Basictype *args);
 
 public:
     Handler();

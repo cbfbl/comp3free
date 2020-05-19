@@ -146,6 +146,7 @@ void Handler::initialize() {
     offset_stack.initialize();
     symbol_table.insertScope();
     current_while_count = 0;
+    was_main_defined = false;
     Function *print = new Function("print");
     Function *printi = new Function("printi");
     vector<string> print_params{"STRING"};
@@ -184,7 +185,12 @@ void Handler::setExpectedRetType(string ret_type) {
 }
 
 // rule 1
-void Handler::finalize() { removeScope(); }
+void Handler::finalize() {
+    if (!was_main_defined) {
+        return;
+    }
+    removeScope();
+}
 
 // rule 4
 void Handler::handleFunctionDeclartion(Basictype *ret_type, Basictype *id,
@@ -194,6 +200,9 @@ void Handler::handleFunctionDeclartion(Basictype *ret_type, Basictype *id,
     }
     if (expected_ret_type != "VOID") {
         return;
+    }
+    if (isMain(ret_type, id, args)) {
+        was_main_defined = true;
     }
     vector<string> params_types;
     Function *func = new Function(((Id *) id)->getName());
@@ -531,4 +540,17 @@ bool Handler::assignmentIsLegal(const string &assign_to,
     }
     return assign_to == assign_from;
 
+}
+
+bool Handler::isMain(Basictype *ret_type, Basictype *id, Basictype *args) {
+    if (ret_type->getType() != "VOID") {
+        return false;
+    }
+    if (id->getLexeme() != "main") {
+        return false;
+    }
+    if (!((Container *) args)->getVariables().empty()) {
+        return false;
+    }
+    return true;
 }
