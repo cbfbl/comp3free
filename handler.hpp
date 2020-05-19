@@ -19,6 +19,7 @@ class Handler {
     SymbolTable symbol_table;
     OffsetStack offset_stack;
     string expected_ret_type;
+    int current_while_count;
 
     void handleStatmentTypeId(Basictype *type, Basictype *id);
 
@@ -44,6 +45,16 @@ class Handler {
     Basictype *handleRettypeVoid(Basictype *type_void);
 
     Basictype *handleIdAssignExp(Basictype *id, Basictype *exp);
+
+    void handleReturnVoid();
+
+    void handleReturnWithType(Basictype *ret_type);
+
+    void handleBreak();
+
+    void handleContinue();
+
+    void handleWhileEnd();
 
     Basictype *handleExpRelopExp(Basictype *exp_left, Basictype *exp_right);
 
@@ -87,9 +98,6 @@ class Handler {
 
     Basictype *handleCallToExp(Basictype *call);
 
-    void handleReturnWithType(Basictype *ret_type);
-
-    void handleReturnVoid();
 
     void finalize();
 

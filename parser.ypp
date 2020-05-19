@@ -115,8 +115,14 @@ Statement : WHILESTART ELSE {
     handler.removeScope();
     handler.handleRule(24,vector<Basictype*>());
 };
-Statement : BREAK SC 													{handler.handleRule(25,vector<Basictype*>());};
-Statement : CONTINUE SC 												{handler.handleRule(26,vector<Basictype*>());};
+Statement : BREAK SC 													{
+    vector<Basictype*> vec{$1};
+    handler.handleRule(25,vec);
+};
+Statement : CONTINUE SC 												{
+    vector<Basictype*> vec{$1};
+    handler.handleRule(26,vec);
+};
 Call : ID LPAREN ExpList RPAREN											{
     vector<Basictype*> vec{$1,$3};
     $$=handler.handleRule(27,vec);

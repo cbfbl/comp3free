@@ -49,6 +49,15 @@ Basictype *Handler::handleRule(int rule_number, vector<Basictype *> params) {
         case 20:
             handleReturnWithType(params[0]);
             break;
+        case 24:
+            handleWhileEnd();
+            break;
+        case 25:
+            handleBreak();
+            break;
+        case 26:
+            handleContinue();
+            break;
         case 27:
             return handleCallWithParams(params[0], params[1]);
             break;
@@ -124,6 +133,7 @@ Handler::Handler() : expected_ret_type("VOID") {}
 void Handler::initialize() {
     offset_stack.initialize();
     symbol_table.insertScope();
+    current_while_count = 0;
     Function *print = new Function("print");
     Function *printi = new Function("printi");
     vector<string> print_params{"STRING"};
@@ -276,11 +286,30 @@ void Handler::handleReturnVoid() {
 }
 
 // rule 20
+void Handler::handleBreak() {
+    if (current_while_count == 0) {
+        return;
+    }
+}
+
+// rule 21
+void Handler::handleContinue() {
+    if (current_while_count == 0) {
+        return;
+    }
+}
+
+// rule 20
 void Handler::handleReturnWithType(Basictype *ret_type) {
     if (expected_ret_type != ret_type->getType()) {
         return;
     }
     setExpectedRetType("VOID");
+}
+
+// rule 24
+void Handler::handleWhileEnd() {
+    current_while_count--;
 }
 
 // rule 27
@@ -453,6 +482,7 @@ Basictype *Handler::handleIfStart(Basictype *exp) {
 
 // rule 50
 Basictype *Handler::handleWhileStart(Basictype *exp) {
+    current_while_count++;
     return handleIfStart(exp);
 }
 
