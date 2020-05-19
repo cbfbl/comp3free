@@ -263,6 +263,8 @@ Basictype *Handler::handleIdAssignExp(Basictype *id, Basictype *exp) {
     Basictype *id_item = symbol_table.getItemById(id->getLexeme());
     if (id_item->getType() == "FUNC") {
         return new Basictype("ERROR");
+    } else if (id_item->getType() == "INT" && exp->getType() == "BYTE") {
+        return id_item;
     } else if (id_item->getType() != exp->getType()) {
         return new Basictype("ERROR");
     }
