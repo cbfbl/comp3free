@@ -138,7 +138,7 @@ Type : BYTE																{handler.handleRule(32,vector<Basictype*>());};
 Type : BOOL															    {handler.handleRule(33,vector<Basictype*>());};
 Exp : LPAREN Exp RPAREN													{
     vector<Basictype*> vec{$2};
-    handler.handleRule(34,vector<Basictype*>());
+    $$=handler.handleRule(34,vector<Basictype*>());
 };
 Exp : Exp BINOPH Exp 													{
     vector<Basictype*> vec{$1,$3};

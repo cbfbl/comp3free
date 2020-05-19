@@ -298,7 +298,6 @@ Basictype *Handler::handleCallWithParams(Basictype *id, Basictype *exp_list) {
 Basictype *Handler::handleCallNoParams(Basictype *id) {
     Basictype *func = symbol_table.getItemById(id->getLexeme());
     if (func->getType() != "FUNC") {
-        cout << func->getType() << endl;
         return new Basictype("ERROR");
     }
     vector<Basictype *> func_args = ((Function *) func)->getVariables();
