@@ -35,6 +35,10 @@ Num::Num(const char *yytext)
     this->setType("INT OR BYTE");
 }
 
+int Num::getVal() {
+    return lexeme_value;
+}
+
 Id::Id(const char *yytext) : Basictype(yytext), name(yytext) {}
 
 string Id::getName() { return name; }

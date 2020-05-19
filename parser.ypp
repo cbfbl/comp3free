@@ -108,7 +108,9 @@ Statement : IFSTART ELSE {
     handler.removeScope();
     handler.handleRule(22,vector<Basictype*>());
 };
-Statement : WHILESTART %prec THEN				                        {handler.handleRule(23,vector<Basictype*>());};
+Statement : WHILESTART %prec THEN				                        {
+    handler.handleRule(23,vector<Basictype*>());
+};
 Statement : WHILESTART ELSE {
     handler.insertScope();
 } Statement			{
@@ -139,9 +141,18 @@ ExpList : Exp COMMA ExpList												{
     vector<Basictype*> vec{$1,$3};
     $$=handler.handleRule(30,vec);
 };
-Type : INT																{handler.handleRule(31,vector<Basictype*>());};
-Type : BYTE																{handler.handleRule(32,vector<Basictype*>());};
-Type : BOOL															    {handler.handleRule(33,vector<Basictype*>());};
+Type : INT																{
+    vector<Basictype*> vec{$1};
+    $$=handler.handleRule(31,vec);
+};
+Type : BYTE																{
+    vector<Basictype*> vec{$1};
+    $$=handler.handleRule(32,vec);
+};
+Type : BOOL															    {
+    vector<Basictype*> vec{$1};
+    $$=handler.handleRule(33,vec);
+};
 Exp : LPAREN Exp RPAREN													{
     vector<Basictype*> vec{$2};
     $$=handler.handleRule(34,vec);

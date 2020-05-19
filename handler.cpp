@@ -49,6 +49,9 @@ Basictype *Handler::handleRule(int rule_number, vector<Basictype *> params) {
         case 20:
             handleReturnWithType(params[0]);
             break;
+        case 23:
+            handleWhileEnd();
+            break;
         case 24:
             handleWhileEnd();
             break;
@@ -69,6 +72,15 @@ Basictype *Handler::handleRule(int rule_number, vector<Basictype *> params) {
             break;
         case 30:
             return handleExpExplist(params[0], params[1]);
+            break;
+        case 31:
+            return handleInt(params[0]);
+            break;
+        case 32:
+            return handleByte(params[0]);
+            break;
+        case 33:
+            return handleBool(params[0]);
             break;
         case 34:
             return handleBracketExpBracket(params[0]);
@@ -307,6 +319,7 @@ void Handler::handleReturnWithType(Basictype *ret_type) {
     setExpectedRetType("VOID");
 }
 
+// rule 23
 // rule 24
 void Handler::handleWhileEnd() {
     current_while_count--;
@@ -364,6 +377,27 @@ Basictype *Handler::handleExpExplist(Basictype *exp, Basictype *exp_list) {
     ((Container *) exp_list)->addVariable(exp);
     return exp_list;
 }
+
+// rule 31
+Basictype *Handler::handleInt(Basictype *some_int) {
+    some_int->setType("INT");
+    return some_int;
+}
+
+//rule 32
+Basictype *Handler::handleByte(Basictype *some_byte) {
+    if (((Num *) some_byte)->getVal() > 255) {
+        return new Basictype("ERROR");
+    }
+    some_byte->setType("BYTE");
+    return some_byte;
+}
+
+// rule 33
+Basictype *Handler::handleBool(Basictype *some_bool) {
+    return some_bool;
+}
+
 
 // rule 34
 Basictype *Handler::handleBracketExpBracket(Basictype *exp) {

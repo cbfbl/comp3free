@@ -42,6 +42,8 @@ class Num : public Basictype {
 
 public:
     Num(const char *yytext);
+
+    int getVal();
 };
 
 class Id : public Basictype {
