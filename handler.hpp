@@ -95,6 +95,8 @@ class Handler {
 
     bool isNum(const string &type);
 
+    bool assignmentIsLegal(const string &assign_to, const string &assign_from);
+
 public:
     Handler();
 

@@ -263,9 +263,7 @@ Basictype *Handler::handleIdAssignExp(Basictype *id, Basictype *exp) {
     Basictype *id_item = symbol_table.getItemById(id->getLexeme());
     if (id_item->getType() == "FUNC") {
         return new Basictype("ERROR");
-    } else if (id_item->getType() == "INT" && exp->getType() == "BYTE") {
-        return id_item;
-    } else if (id_item->getType() != exp->getType()) {
+    } else if (!assignmentIsLegal(id->getType(), exp->getType())) {
         return new Basictype("ERROR");
     }
     return id_item;
@@ -301,7 +299,8 @@ Basictype *Handler::handleCallWithParams(Basictype *id, Basictype *exp_list) {
         return new Basictype("ERROR");
     }
     for (int i = 0; i < func_args.size(); i++) {
-        if (func_args[i]->getType() != exp_list_params[i]->getType()) {
+        if (!assignmentIsLegal(func_args[i]->getType(),
+                               exp_list_params[i]->getType())) {
             return new Basictype("ERROR");
         }
     }
@@ -460,4 +459,13 @@ Basictype *Handler::handleWhileStart(Basictype *exp) {
 
 bool Handler::isNum(const string &type) {
     return (type == "INT" || type == "BYTE");
+}
+
+bool Handler::assignmentIsLegal(const string &assign_to,
+                                const string &assign_from) {
+    if (assign_to == "INT" && assign_from == "BYTE") {
+        return true;
+    }
+    return assign_to == assign_from;
+
 }
