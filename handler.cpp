@@ -257,10 +257,16 @@ void Handler::handleStatmentTypeIdAssignExp(Basictype *type, Basictype *id,
 // rule 17
 
 Basictype *Handler::handleIdAssignExp(Basictype *id, Basictype *exp) {
-    if (id->getType() != exp->getType()) {
+    if (!symbol_table.exists(id->getLexeme())) {
         return new Basictype("ERROR");
     }
-    return id;
+    Basictype *id_item = symbol_table.getItemById(id->getLexeme());
+    if (id_item->getType() == "FUNC") {
+        return new Basictype("ERROR");
+    } else if (id_item->getType() != exp->getType()) {
+        return new Basictype("ERROR");
+    }
+    return id_item;
 }
 
 // rule 19
