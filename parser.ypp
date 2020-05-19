@@ -170,11 +170,11 @@ Exp : STRING															{
 };
 Exp : TRUE																{
     vector<Basictype*> vec{$1};
-    handler.handleRule(42,vec);
+    $$=handler.handleRule(42,vec);
 };
 Exp : FALSE															    {
     vector<Basictype*> vec{$1};
-    handler.handleRule(43,vec);
+    $$=handler.handleRule(43,vec);
 };
 Exp : NOT Exp															{
     vector<Basictype*> vec{$2};
