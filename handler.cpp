@@ -12,25 +12,18 @@ Basictype *Handler::handleRule(int rule_number, vector<Basictype *> params) {
             break;
         case 5:
             return handleRettypeType(params[0]);
-            break;
         case 6:
             return handleRettypeVoid(params[0]);
-            break;
         case 7:
             return handleFormalsEpsilon();
-            break;
         case 8:
             return handleFormalsFormalList(params[0]);
-            break;
         case 9:
             return handleFormalDecl(params[0]);
-            break;
         case 10:
             return handleFormalDeclFormalList(params[0], params[1]);
-            break;
         case 11:
             return handleFormalDeclTypeId(params[0], params[1]);
-            break;
         case 14:
             removeScope();
             break;
@@ -42,7 +35,6 @@ Basictype *Handler::handleRule(int rule_number, vector<Basictype *> params) {
             break;
         case 17:
             return handleIdAssignExp(params[0], params[1]);
-            break;
         case 19:
             handleReturnVoid();
             break;
@@ -50,8 +42,6 @@ Basictype *Handler::handleRule(int rule_number, vector<Basictype *> params) {
             handleReturnWithType(params[0]);
             break;
         case 23:
-            handleWhileEnd();
-            break;
         case 24:
             handleWhileEnd();
             break;
@@ -63,77 +53,52 @@ Basictype *Handler::handleRule(int rule_number, vector<Basictype *> params) {
             break;
         case 27:
             return handleCallWithParams(params[0], params[1]);
-            break;
         case 28:
             return handleCallNoParams(params[0]);
-            break;
         case 29:
             return handleExplistExp(params[0]);
-            break;
         case 30:
             return handleExpExplist(params[0], params[1]);
-            break;
         case 31:
             return handleInt(params[0]);
-            break;
         case 32:
             return handleByte(params[0]);
-            break;
         case 33:
             return handleBool(params[0]);
-            break;
         case 34:
             return handleBracketExpBracket(params[0]);
-            break;
         case 35:
             return handleExpBinopH(params[0], params[1]);
-            break;
         case 36:
             return handleExpBinopL(params[0], params[1]);
-            break;
         case 37:
             return handleId(params[0]);
-            break;
         case 38:
             return handleCallToExp(params[0]);
-            break;
         case 39:
             return handleNum(params[0]);
-            break;
         case 40:
             return handleNumB(params[0]);
-            break;
         case 41:
             return handleString(params[0]);
-            break;
         case THE_ANSWER:
             return handleTrue(params[0]);
-            break;
         case 43:
             return handleFalse(params[0]);
-            break;
         case 44:
             return handleNotExp(params[0]);
-            break;
         case 45:
             return handleExpAndExp(params[0], params[1]);
-            break;
         case 46:
             return handleExpOrExp(params[0], params[1]);
-            break;
         case 47:
             return handleExpRelopExp(params[0], params[1]);
-            break;
         case 48:
             return handleExpReleqExp(params[0], params[1]);
-            break;
         case 49:
             return handleIfStart(params[0]);
-            break;
         case 50:
             return handleWhileStart(params[0]);
-            break;
-
         default:
             break;
     }
