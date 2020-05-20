@@ -58,6 +58,14 @@ vector<Basictype *> Container::getVariables() { return variables_list; }
 
 void Container::addVariable(Basictype *var) { variables_list.push_back(var); }
 
+vector<string> Container::getVariablesTypes() {
+    vector<string> out_vec;
+    for (auto basic_type : variables_list) {
+        out_vec.push_back(basic_type->getType());
+    }
+    return out_vec;
+}
+
 Function::Function(const char *yytext) : Container(yytext) { setType("FUNC"); }
 
 Function::Function(string yytext) : Container(yytext.c_str()) {

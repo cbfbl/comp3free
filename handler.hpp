@@ -15,6 +15,8 @@ using std::endl;
 using std::string;
 using std::vector;
 
+extern int yylineno;
+
 class Handler {
     SymbolTable symbol_table;
     OffsetStack offset_stack;
@@ -113,6 +115,8 @@ class Handler {
     bool assignmentIsLegal(const string &assign_to, const string &assign_from);
 
     bool isMain(Basictype *ret_type, Basictype *id, Basictype *args);
+
+    void insertPrintFunctions();
 
 public:
     Handler();

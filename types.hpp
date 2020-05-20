@@ -72,6 +72,8 @@ public:
     vector<Basictype *> getVariables();
 
     void addVariable(Basictype *var);
+
+    vector<string> getVariablesTypes();
 };
 
 class Function : public Container {
