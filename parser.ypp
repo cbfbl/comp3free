@@ -113,9 +113,9 @@ Statement : WHILESTART %prec THEN				                        {
 };
 Statement : WHILESTART ELSE {
     handler.insertScope();
+    handler.handleRule(24,vector<Basictype*>());
 } Statement			{
     handler.removeScope();
-    handler.handleRule(24,vector<Basictype*>());
 };
 Statement : BREAK SC 													{
     vector<Basictype*> vec{$1};
