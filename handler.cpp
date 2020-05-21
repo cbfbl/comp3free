@@ -391,9 +391,6 @@ Basictype *Handler::handleInt(Basictype *some_int) {
 
 //rule 32
 Basictype *Handler::handleByte(Basictype *some_byte) {
-    if (((Num *) some_byte)->getVal() > 255) {
-        output::errorByteTooLarge(yylineno, some_byte->getLexeme());
-    }
     some_byte->setType("BYTE");
     return some_byte;
 }
@@ -451,6 +448,10 @@ Basictype *Handler::handleNum(Basictype *num) {
 
 // rule 40
 Basictype *Handler::handleNumB(Basictype *num) {
+    if (((Num *) num)->getVal() > 255) {
+        output::errorByteTooLarge(yylineno, num->getLexeme());
+        exit(0);
+    }
     num->setType("BYTE");
     return num;
 }
