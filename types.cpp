@@ -58,6 +58,10 @@ vector<Basictype *> Container::getVariables() { return variables_list; }
 
 void Container::addVariable(Basictype *var) { variables_list.push_back(var); }
 
+void Container::addVariableToFront(Basictype *var) {
+    variables_list.insert(variables_list.begin(), var);
+}
+
 vector<string> Container::getVariablesTypes() {
     vector<string> out_vec;
     for (auto basic_type : variables_list) {

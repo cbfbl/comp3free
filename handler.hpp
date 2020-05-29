@@ -130,6 +130,8 @@ public:
     void insertScope();
 
     void removeScope();
+
+    void checkDefined(Basictype *id);
 };
 
 #endif

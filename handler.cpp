@@ -155,6 +155,13 @@ void Handler::insertScope() {
     offset_stack.duplicateLastItem();
 }
 
+void Handler::checkDefined(Basictype *id) {
+    if (symbol_table.exists(id->getLexeme())) {
+        output::errorDef(yylineno, id->getLexeme());
+        exit(0);
+    }
+}
+
 void Handler::setExpectedRetType(string ret_type) {
     expected_ret_type = ret_type;
 }
@@ -221,7 +228,7 @@ Basictype *Handler::handleFormalDecl(Basictype *formal_decl) {
 // rule 10
 Basictype *Handler::handleFormalDeclFormalList(Basictype *formal_decl,
                                                Basictype *formal_list) {
-    ((Container *) formal_list)->addVariable(formal_decl);
+    ((Container *) formal_list)->addVariableToFront(formal_decl);
     return formal_list;
 }
 
@@ -266,7 +273,6 @@ void Handler::handleStatmentTypeIdAssignExp(Basictype *type, Basictype *id,
 }
 
 // rule 17
-
 Basictype *Handler::handleIdAssignExp(Basictype *id, Basictype *exp) {
     if (!symbol_table.exists(id->getLexeme())) {
         output::errorUndef(yylineno, id->getLexeme());
@@ -291,25 +297,10 @@ void Handler::handleReturnVoid() {
     }
 }
 
-// rule 20
-void Handler::handleBreak() {
-    if (current_while_count == 0) {
-        output::errorUnexpectedBreak(yylineno);
-        exit(0);
-    }
-}
-
-// rule 21
-void Handler::handleContinue() {
-    if (current_while_count == 0) {
-        output::errorUnexpectedContinue(yylineno);
-        exit(0);
-    }
-}
 
 // rule 20
 void Handler::handleReturnWithType(Basictype *ret_type) {
-    if (expected_ret_type != ret_type->getType()) {
+    if (!assignmentIsLegal(expected_ret_type, ret_type->getType())) {
         output::errorMismatch(yylineno);
         exit(0);
     }
@@ -322,8 +313,28 @@ void Handler::handleWhileEnd() {
     current_while_count--;
 }
 
+// rule 25
+void Handler::handleBreak() {
+    if (current_while_count == 0) {
+        output::errorUnexpectedBreak(yylineno);
+        exit(0);
+    }
+}
+
+// rule 26
+void Handler::handleContinue() {
+    if (current_while_count == 0) {
+        output::errorUnexpectedContinue(yylineno);
+        exit(0);
+    }
+}
+
 // rule 27
 Basictype *Handler::handleCallWithParams(Basictype *id, Basictype *exp_list) {
+    if (!symbol_table.exists(id->getLexeme())) {
+        output::errorUndefFunc(yylineno, id->getLexeme());
+        exit(0);
+    }
     Basictype *func = symbol_table.getItemById(id->getLexeme());
     if (func->getType() != "FUNC") {
         output::errorUndefFunc(yylineno, id->getLexeme());
@@ -353,6 +364,10 @@ Basictype *Handler::handleCallWithParams(Basictype *id, Basictype *exp_list) {
 
 // rule 28
 Basictype *Handler::handleCallNoParams(Basictype *id) {
+    if (!symbol_table.exists(id->getLexeme())) {
+        output::errorUndefFunc(yylineno, id->getLexeme());
+        exit(0);
+    }
     Basictype *func = symbol_table.getItemById(id->getLexeme());
     if (func->getType() != "FUNC") {
         output::errorUndefFunc(yylineno, id->getLexeme());
@@ -373,13 +388,13 @@ Basictype *Handler::handleCallNoParams(Basictype *id) {
 // rule 29
 Basictype *Handler::handleExplistExp(Basictype *exp) {
     Container *con = new Container(exp->getLexeme().c_str());
-    con->addVariable(exp);
+    con->addVariableToFront(exp);
     return con;
 }
 
 // rule 30
 Basictype *Handler::handleExpExplist(Basictype *exp, Basictype *exp_list) {
-    ((Container *) exp_list)->addVariable(exp);
+    ((Container *) exp_list)->addVariableToFront(exp);
     return exp_list;
 }
 
@@ -425,6 +440,10 @@ Basictype *Handler::handleExpBinopL(Basictype *exp_left, Basictype *exp_right) {
 
 // rule 37
 Basictype *Handler::handleId(Basictype *id) {
+    if (!symbol_table.exists(id->getLexeme())) {
+        output::errorUndef(yylineno, id->getLexeme());
+        exit(0);
+    }
     Basictype *id_type = symbol_table.getItemById(id->getLexeme());
     Basictype *ret_type = new Basictype(id_type->getLexeme().c_str());
     if (id_type->getType() == "FUNC") {

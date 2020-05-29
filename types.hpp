@@ -73,6 +73,8 @@ public:
 
     void addVariable(Basictype *var);
 
+    void addVariableToFront(Basictype *var);
+
     vector<string> getVariablesTypes();
 };
 

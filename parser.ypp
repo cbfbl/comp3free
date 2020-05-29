@@ -43,6 +43,7 @@ Funcs : FuncDecl Funcs 													{
 FuncDecl : RetType ID LPAREN {
     handler.insertScope();
     handler.setExpectedRetType($1->getType());
+    handler.checkDefined($2);
 } Formals RPAREN LBRACE Statements RBRACE 	{
     vector<Basictype*> vec{$1,$2,$5};
     handler.handleRule(4,vec);
